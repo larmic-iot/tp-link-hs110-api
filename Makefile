@@ -12,6 +12,9 @@ BINARY_WINDOWS=$(BINARY_NAME)_windows.exe
 
 all: clean test build
 
+run:
+	@go run main.go
+
 build: deps
 	@echo "Build executable"
 	@go build -a -o bin/$(BINARY_NAME)
