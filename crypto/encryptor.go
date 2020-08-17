@@ -15,28 +15,32 @@ func NewEncryptor(printDebug bool) *Encryptor {
 		key:        int32(0xAB),
 		printDebug: printDebug,
 	}
+
 	return &encryptor
 }
 
 func (e *Encryptor) Encrypt(message string) []byte {
-	var text []byte
-	text = append(text, 0)
-	text = append(text, 0)
-	text = append(text, 0)
-	text = append(text, 0)
-	binary.BigEndian.PutUint32(text, uint32(len(message)))
+	encryptedMessage := createByteArray(len(message))
 
 	for _, x := range e.encrypt(message) {
-		valur := byte(x)
-
 		if e.printDebug {
-			fmt.Printf("write %d to byte %b\n", x, valur)
+			fmt.Printf("write %d to byte %b\n", x, byte(x))
 		}
 
-		text = append(text, valur)
+		encryptedMessage = append(encryptedMessage, byte(x))
 	}
 
-	return text
+	return encryptedMessage
+}
+
+func createByteArray(messageLength int) []byte {
+	var encryptedMessage []byte
+	encryptedMessage = append(encryptedMessage, 0)
+	encryptedMessage = append(encryptedMessage, 0)
+	encryptedMessage = append(encryptedMessage, 0)
+	encryptedMessage = append(encryptedMessage, 0)
+	binary.BigEndian.PutUint32(encryptedMessage, uint32(messageLength))
+	return encryptedMessage
 }
 
 func (e *Encryptor) encrypt(message string) []int32 {
