@@ -1,17 +1,26 @@
 package main
 
 import (
-	"encoding/binary"
+	"bytes"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net"
+
+	"tp-link-hs110-api/crypto"
 )
 
 const (
-	message       = "{\"emeter\":{\"get_realtime\":null}}"
+	printDebug    = false
 	StopCharacter = "\r\n\r\n"
+	emeter        = "{\"emeter\":{\"get_realtime\":null}}"
+	info          = "{\"system\":{\"get_sysinfo\":null}}"
 	on            = "{\"system\":{\"set_relay_state\":{\"state\":1}}}}"
 	off           = "{\"system\":{\"set_relay_state\":{\"state\":0}}}}"
+)
+
+var (
+	encryptor = crypto.NewEncryptor(printDebug)
 )
 
 func main() {
@@ -25,42 +34,29 @@ func main() {
 
 	defer conn.Close()
 
-	command := on
+	command := info
 
-	data := encrypt(command)
-
-	var text []byte
-	text = append(text, 0)
-	text = append(text, 0)
-	text = append(text, 0)
-	text = append(text, 0)
-	binary.BigEndian.PutUint32(text, uint32(len(command)))
-
-	for _, x := range data {
-		valur := byte(x)
-		//t := int8(x - 256)
-		fmt.Printf("write %d to byte %b\n", x, valur)
-		//fmt.Println(t)
-		text = append(text, valur)
-		//text = append(text, uint8(x-256))
-	}
-
-	conn.Write(text)
+	conn.Write(encryptor.Encrypt(command))
 	conn.Write([]byte(StopCharacter))
+
 	log.Printf("Send: %s", command)
-}
 
-func encrypt(message string) []int32 {
-	var buffer []int32
+	all, _ := ioutil.ReadAll(conn)
+	log.Println(all)
 
-	var key = int32(0xAB)
+	var key = int32(0x2B)
 
-	for pos, char := range message {
-		value := char ^ key
-		key = value
-		buffer = append(buffer, value)
-		fmt.Printf("character %c, %d starts at byte position %d\n", char, value, pos)
+	var buffer bytes.Buffer
+	buffer.WriteString("{")
+
+	for pos, char := range all {
+		value := int32(char) ^ key
+		key = int32(char)
+		fmt.Printf("read character %d, %d, %s\n", int32(char), value, string(value))
+		if pos > 4 {
+			buffer.WriteString(string(value))
+		}
 	}
 
-	return buffer
+	fmt.Println(buffer.String())
 }
