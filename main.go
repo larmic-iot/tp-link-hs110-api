@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -21,12 +20,13 @@ const (
 
 var (
 	encryptor = crypto.NewEncryptor(printDebug)
+	decryptor = crypto.NewDecryptor(printDebug)
 )
 
 func main() {
 	fmt.Println("Hello tp-link-hs110-api!")
 
-	conn, err := net.Dial("tcp", "10.0.0.210:9999")
+	conn, err := net.Dial("tcp", "10.0.0.211:9999")
 
 	if err != nil {
 		log.Fatalln(err)
@@ -34,29 +34,14 @@ func main() {
 
 	defer conn.Close()
 
-	command := info
+	request := info
 
-	conn.Write(encryptor.Encrypt(command))
+	conn.Write(encryptor.Encrypt(request))
 	conn.Write([]byte(StopCharacter))
 
-	log.Printf("Send: %s", command)
+	log.Printf("Request: %s", request)
 
 	all, _ := ioutil.ReadAll(conn)
-	log.Println(all)
 
-	var key = int32(0x2B)
-
-	var buffer bytes.Buffer
-	buffer.WriteString("{")
-
-	for pos, char := range all {
-		value := int32(char) ^ key
-		key = int32(char)
-		fmt.Printf("read character %d, %d, %s\n", int32(char), value, string(value))
-		if pos > 4 {
-			buffer.WriteString(string(value))
-		}
-	}
-
-	fmt.Println(buffer.String())
+	log.Printf("Response: %s", decryptor.Decrypt(all))
 }

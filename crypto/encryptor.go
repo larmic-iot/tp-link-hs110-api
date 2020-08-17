@@ -2,7 +2,7 @@ package crypto
 
 import (
 	"encoding/binary"
-	"fmt"
+	"log"
 )
 
 type Encryptor struct {
@@ -11,12 +11,10 @@ type Encryptor struct {
 }
 
 func NewEncryptor(printDebug bool) *Encryptor {
-	encryptor := Encryptor{
+	return &Encryptor{
 		key:        int32(0xAB),
 		printDebug: printDebug,
 	}
-
-	return &encryptor
 }
 
 func (e *Encryptor) Encrypt(message string) []byte {
@@ -24,7 +22,7 @@ func (e *Encryptor) Encrypt(message string) []byte {
 
 	for _, x := range e.encrypt(message) {
 		if e.printDebug {
-			fmt.Printf("write %d to byte %b\n", x, byte(x))
+			log.Printf("write %d to byte %b\n", x, byte(x))
 		}
 
 		encryptedMessage = append(encryptedMessage, byte(x))
@@ -52,7 +50,7 @@ func (e *Encryptor) encrypt(message string) []int32 {
 		buffer = append(buffer, value)
 
 		if e.printDebug {
-			fmt.Printf("character %c, %d starts at byte position %d\n", char, value, pos)
+			log.Printf("character %c, %d starts at byte position %d\n", char, value, pos)
 		}
 	}
 
