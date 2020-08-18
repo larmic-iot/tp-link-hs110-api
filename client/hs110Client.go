@@ -15,6 +15,10 @@ type TpLinkHS110Client struct {
 }
 
 const (
+	emeter        = "{\"emeter\":{\"get_realtime\":null}}"
+	info          = "{\"system\":{\"get_sysinfo\":null}}"
+	on            = "{\"system\":{\"set_relay_state\":{\"state\":1}}}}"
+	off           = "{\"system\":{\"set_relay_state\":{\"state\":0}}}}"
 	StopCharacter = "\r\n\r\n"
 )
 
@@ -26,7 +30,23 @@ func NewTpLinkHS110Client(ip string, printDebug bool) *TpLinkHS110Client {
 	}
 }
 
-func (d *TpLinkHS110Client) Request(message string) string {
+func (d *TpLinkHS110Client) RequestInfo() string {
+	return d.request(info)
+}
+
+func (d *TpLinkHS110Client) RequestCurrentEnergyStatistics() string {
+	return d.request(emeter)
+}
+
+func (d *TpLinkHS110Client) RequestSwitchOn() string {
+	return d.request(on)
+}
+
+func (d *TpLinkHS110Client) RequestSwitchOff() string {
+	return d.request(off)
+}
+
+func (d *TpLinkHS110Client) request(message string) string {
 	encryptor := crypto.NewEncryptor(d.printDebug)
 	decryptor := crypto.NewDecryptor(d.printDebug)
 	conn, err := net.Dial("tcp", d.ip+":9999")
