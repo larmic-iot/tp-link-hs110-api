@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
 
@@ -10,7 +11,8 @@ import (
 )
 
 const (
-	printDebug = false
+	printDebug  = false
+	timeoutInMs = 500
 )
 
 func main() {
@@ -24,6 +26,7 @@ func main() {
 	//log.Printf("Request energy: %s", fridgeClient.RequestSwitchOn())
 
 	router := mux.NewRouter().StrictSlash(true)
+	router.NotFoundHandler = Handle404()
 
 	router.HandleFunc("/api/hello/{ip}", testHandler).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8080", router))
@@ -33,7 +36,31 @@ func testHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	key := vars["ip"]
 
-	socketClient := client.NewTpLinkHS110Client(key, printDebug)
+	socketClient := client.NewTpLinkHS110Client(key, timeoutInMs, printDebug)
 
-	w.Write([]byte(socketClient.RequestInfo()))
+	response, err := socketClient.RequestInfo()
+
+	if err == nil {
+		_, _ = w.Write([]byte(response))
+	} else {
+		w.WriteHeader(http.StatusNotFound)
+		_, _ = w.Write([]byte(key + " not found."))
+	}
+}
+
+type ProtocolError struct {
+	Code    int
+	Message string
+}
+
+func Handle404() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		json.
+			NewEncoder(w).
+			Encode(
+				ProtocolError{
+					Code:    http.StatusNotFound,
+					Message: http.StatusText(http.StatusNotFound),
+				})
+	})
 }

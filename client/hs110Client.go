@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net"
+	"time"
 
 	"tp-link-hs110-api/client/crypto"
 )
@@ -11,6 +12,7 @@ import (
 type TpLinkHS110Client struct {
 	ip         string
 	port       int
+	timoutInMs int
 	printDebug bool
 }
 
@@ -22,37 +24,39 @@ const (
 	StopCharacter = "\r\n\r\n"
 )
 
-func NewTpLinkHS110Client(ip string, printDebug bool) *TpLinkHS110Client {
+func NewTpLinkHS110Client(ip string, timoutInMs int, printDebug bool) *TpLinkHS110Client {
 	return &TpLinkHS110Client{
 		ip:         ip,
 		port:       9999,
+		timoutInMs: timoutInMs,
 		printDebug: printDebug,
 	}
 }
 
-func (d *TpLinkHS110Client) RequestInfo() string {
+func (d *TpLinkHS110Client) RequestInfo() (string, error) {
 	return d.request(info)
 }
 
-func (d *TpLinkHS110Client) RequestCurrentEnergyStatistics() string {
+func (d *TpLinkHS110Client) RequestCurrentEnergyStatistics() (string, error) {
 	return d.request(emeter)
 }
 
-func (d *TpLinkHS110Client) RequestSwitchOn() string {
+func (d *TpLinkHS110Client) RequestSwitchOn() (string, error) {
 	return d.request(on)
 }
 
-func (d *TpLinkHS110Client) RequestSwitchOff() string {
+func (d *TpLinkHS110Client) RequestSwitchOff() (string, error) {
 	return d.request(off)
 }
 
-func (d *TpLinkHS110Client) request(message string) string {
+func (d *TpLinkHS110Client) request(message string) (string, error) {
 	encryptor := crypto.NewEncryptor(d.printDebug)
 	decryptor := crypto.NewDecryptor(d.printDebug)
-	conn, err := net.Dial("tcp", d.ip+":9999")
+	dialer := net.Dialer{Timeout: time.Duration(d.timoutInMs) * time.Millisecond}
+	conn, err := dialer.Dial("tcp", d.ip+":9999")
 
 	if err != nil {
-		log.Fatalln(err)
+		return "", err
 	}
 
 	defer conn.Close()
@@ -61,10 +65,18 @@ func (d *TpLinkHS110Client) request(message string) string {
 		log.Printf("Sent:     %s\n", message)
 	}
 
-	_, _ = conn.Write(encryptor.Encrypt(message))
-	_, _ = conn.Write([]byte(StopCharacter))
+	_, err = conn.Write(encryptor.Encrypt(message))
+	_, err = conn.Write([]byte(StopCharacter))
 
-	all, _ := ioutil.ReadAll(conn)
+	if err != nil {
+		return "", err
+	}
+
+	all, err := ioutil.ReadAll(conn)
+
+	if err != nil {
+		return "", err
+	}
 
 	received := decryptor.Decrypt(all)
 
@@ -72,5 +84,5 @@ func (d *TpLinkHS110Client) request(message string) string {
 		log.Printf("Received: %s\n", received)
 	}
 
-	return received
+	return received, nil
 }
