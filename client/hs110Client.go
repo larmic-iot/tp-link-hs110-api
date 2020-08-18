@@ -5,7 +5,7 @@ import (
 	"log"
 	"net"
 
-	"tp-link-hs110-api/crypto"
+	"tp-link-hs110-api/client/crypto"
 )
 
 type TpLinkHS110Client struct {
@@ -57,12 +57,20 @@ func (d *TpLinkHS110Client) request(message string) string {
 
 	defer conn.Close()
 
-	request := message
+	if d.printDebug {
+		log.Printf("Sent:     %s\n", message)
+	}
 
-	conn.Write(encryptor.Encrypt(request))
-	conn.Write([]byte(StopCharacter))
+	_, _ = conn.Write(encryptor.Encrypt(message))
+	_, _ = conn.Write([]byte(StopCharacter))
 
 	all, _ := ioutil.ReadAll(conn)
 
-	return decryptor.Decrypt(all)
+	received := decryptor.Decrypt(all)
+
+	if d.printDebug {
+		log.Printf("Received: %s\n", received)
+	}
+
+	return received
 }
