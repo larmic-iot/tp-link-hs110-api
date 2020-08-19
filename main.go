@@ -28,11 +28,12 @@ func main() {
 	router := mux.NewRouter().StrictSlash(true)
 	router.NotFoundHandler = Handle404()
 
-	router.HandleFunc("/api/hello/{ip}", testHandler).Methods("GET")
+	router.HandleFunc("/api/{ip}", infoHandler).Methods("GET")
+	router.HandleFunc("/api/{ip}/energy", energyHandler).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
-func testHandler(w http.ResponseWriter, r *http.Request) {
+func infoHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	key := vars["ip"]
 
@@ -44,6 +45,24 @@ func testHandler(w http.ResponseWriter, r *http.Request) {
 		_, _ = w.Write([]byte(response))
 	} else {
 		w.WriteHeader(http.StatusNotFound)
+		w.Header().Add("Content-Type", "application/json")
+		_, _ = w.Write([]byte(key + " not found."))
+	}
+}
+
+func energyHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	key := vars["ip"]
+
+	socketClient := client.NewTpLinkHS110Client(key, timeoutInMs, printDebug)
+
+	response, err := socketClient.RequestCurrentEnergyStatistics()
+
+	if err == nil {
+		_, _ = w.Write([]byte(response))
+	} else {
+		w.WriteHeader(http.StatusNotFound)
+		w.Header().Add("Content-Type", "application/json")
 		_, _ = w.Write([]byte(key + " not found."))
 	}
 }
