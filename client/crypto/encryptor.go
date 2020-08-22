@@ -5,15 +5,19 @@ import (
 	"log"
 )
 
+const (
+	cryptoKey = int32(0xAB)
+)
+
 type Encryptor struct {
-	key        int32
-	printDebug bool
+	nextCryptoKey int32
+	printDebug    bool
 }
 
 func NewEncryptor(printDebug bool) *Encryptor {
 	return &Encryptor{
-		key:        int32(0xAB),
-		printDebug: printDebug,
+		nextCryptoKey: cryptoKey,
+		printDebug:    printDebug,
 	}
 }
 
@@ -45,8 +49,8 @@ func (e *Encryptor) encrypt(message string) []int32 {
 	var buffer []int32
 
 	for pos, char := range message {
-		value := char ^ e.key
-		e.key = value
+		value := char ^ e.nextCryptoKey
+		e.nextCryptoKey = value
 		buffer = append(buffer, value)
 
 		if e.printDebug {

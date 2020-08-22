@@ -7,17 +7,23 @@ import (
 	"net"
 )
 
+const (
+	cryptoKey = int32(0x2B)
+)
+
 // ioutil.ReadAll(...) is waiting up to 1 second to close connection.
 // this reader counts opening and closing brackets and compare them.
 // if bracket count is equal connection will be closed.
 func ReadJson(conn net.Conn) (string, error) {
 	reader := bufio.NewReader(conn)
-	var key = int32(0x2B)
+	var nextCryptoKey = cryptoKey
 	var buffer bytes.Buffer
+	// add first opening bracket because tp link does not send it
+	buffer.WriteString("{")
+
 	var counter = 0
 	var countOpenBrackets = 1
 	var countCloseBrackets = 0
-	buffer.WriteString("{")
 
 	for {
 		ba, err := reader.ReadByte()
@@ -28,8 +34,8 @@ func ReadJson(conn net.Conn) (string, error) {
 			return "", err
 		}
 
-		decryptedValue := string(int32(ba) ^ key)
-		key = int32(ba)
+		decryptedValue := string(int32(ba) ^ nextCryptoKey)
+		nextCryptoKey = int32(ba)
 
 		// ignore first 4 bytes
 		if counter > 4 {
