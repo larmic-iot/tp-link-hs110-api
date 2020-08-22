@@ -18,13 +18,6 @@ const (
 func main() {
 	log.Println("Hello tp-link-hs110-api!")
 
-	//fridgeClient := client.NewTpLinkHS110Client("10.0.0.78", printDebug)
-
-	//log.Printf("Request info: %s", fridgeClient.RequestInfo())
-	//log.Printf("Request energy: %s", fridgeClient.RequestCurrentEnergyStatistics())
-	//log.Printf("Request energy: %s", fridgeClient.RequestSwitchOff())
-	//log.Printf("Request energy: %s", fridgeClient.RequestSwitchOn())
-
 	router := mux.NewRouter().StrictSlash(true)
 	router.NotFoundHandler = Handle404()
 
