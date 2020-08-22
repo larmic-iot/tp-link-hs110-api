@@ -19,6 +19,7 @@ type TpLinkHS110Client struct {
 }
 
 const (
+	// see https://github.com/softScheck/tplink-smartplug/blob/master/tplink-smarthome-commands.txt
 	emeter        = "{\"emeter\":{\"get_realtime\":null}}"
 	info          = "{\"system\":{\"get_sysinfo\":null}}"
 	on            = "{\"system\":{\"set_relay_state\":{\"state\":1}}}}"

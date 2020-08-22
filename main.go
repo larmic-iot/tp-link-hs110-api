@@ -23,6 +23,7 @@ func main() {
 
 	router.HandleFunc("/api/{ip}", infoHandler).Methods("GET")
 	router.HandleFunc("/api/{ip}/energy", energyHandler).Methods("GET")
+
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
