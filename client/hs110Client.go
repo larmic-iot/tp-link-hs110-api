@@ -1,14 +1,12 @@
 package client
 
 import (
-	"bufio"
-	"bytes"
-	"io"
 	"log"
 	"net"
 	"time"
 
 	"tp-link-hs110-api/client/crypto"
+	"tp-link-hs110-api/client/ioutil"
 )
 
 type TpLinkHS110Client struct {
@@ -74,7 +72,7 @@ func (d *TpLinkHS110Client) request(message string) (string, error) {
 		return "", err
 	}
 
-	received, err := Read(conn)
+	received, err := ioutil.ReadJson(conn)
 
 	if err != nil {
 		return "", err
@@ -85,50 +83,4 @@ func (d *TpLinkHS110Client) request(message string) (string, error) {
 	}
 
 	return received, nil
-}
-
-func Read(conn net.Conn) (string, error) {
-	reader := bufio.NewReader(conn)
-	var key = int32(0x2B)
-	var buffer bytes.Buffer
-	var counter = 0
-	var countOpenBrackets = 1
-	var countCloseBrackets = 0
-	buffer.WriteString("{")
-
-	for {
-		ba, err := reader.ReadByte()
-		if err != nil {
-			if err == io.EOF {
-				break
-			}
-			return "", err
-		}
-
-		decryptedValue := string(int32(ba) ^ key)
-		key = int32(ba)
-
-		// ignore first 4 bytes
-		if counter > 4 {
-			buffer.WriteString(decryptedValue)
-		}
-
-		// count opened brackets
-		if decryptedValue == "{" {
-			countOpenBrackets++
-		}
-
-		// count closed bracket
-		if decryptedValue == "}" {
-			countCloseBrackets++
-		}
-
-		// stop reading connection if opened and closed brackets are equal
-		if countOpenBrackets == countCloseBrackets {
-			break
-		}
-
-		counter++
-	}
-	return buffer.String(), nil
 }
