@@ -35,13 +35,22 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 
 	response, err := socketClient.RequestInfo()
 
-	if err == nil {
-		_, _ = w.Write([]byte(response))
-	} else {
+	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
-		w.Header().Add("Content-Type", "application/json")
+		w.Header().Add("Content-Type", "text/plain")
 		_, _ = w.Write([]byte(key + " not found."))
 	}
+
+	marshal, err := json.Marshal(response)
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Header().Add("Content-Type", "text/plain")
+		_, _ = w.Write([]byte(key + " throws internal server error."))
+	}
+
+	w.Header().Add("Content-Type", "application/json")
+	_, _ = w.Write(marshal)
 }
 
 func energyHandler(w http.ResponseWriter, r *http.Request) {
@@ -56,7 +65,6 @@ func energyHandler(w http.ResponseWriter, r *http.Request) {
 		_, _ = w.Write([]byte(response))
 	} else {
 		w.WriteHeader(http.StatusNotFound)
-		w.Header().Add("Content-Type", "application/json")
 		_, _ = w.Write([]byte(key + " not found."))
 	}
 }
