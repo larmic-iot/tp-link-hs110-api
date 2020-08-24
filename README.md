@@ -11,14 +11,10 @@
 ## Build it
 
 ```sh 
-$ make build                        # build native app to ./build folder
-            
-$ make docker-build                 # build local docker image
-$ make docker-push                  # push local docker image to hub.docker.com
-$ make docker-all                   # build and push docker image to hub.docker.com
-$ make IMAGE_TAG="0.0.1" docker-all # build and push docker image with specific version
-
-$ make clean                        # clean up go and build folder
+$ make docker-build                          # build local docker image
+$ make docker-push                           # push local docker image to hub.docker.com
+$ make docker-all                            # build and push docker image to hub.docker.com
+$ make IMAGE_TAG="0.0.1" docker-all          # build and push docker image with specific version
 ```
 
 ## Run it native
