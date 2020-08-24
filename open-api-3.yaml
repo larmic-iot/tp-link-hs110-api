@@ -1,0 +1,49 @@
+openapi: 3.1.0
+
+info:
+  title: TP-Link Smart Home HS110 Plug API
+  version: 0.0.1
+  contact:
+    name: Lars Michaelis
+    email: mail@larmic.de
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+paths:
+  /api/{plugIp}:
+    get:
+      summary: Returns a smart plug by ip.
+      parameters:
+        - name: plugIp
+          in: path
+          required: true
+          description: ip address of plug (i.e. 10.0.0.100)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Smart plug
+          content:
+            'application/json': {}
+        '404':
+          description: Smart plug not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProtocolError"
+
+components:
+  schemas:
+    ProtocolError:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          description: HTTP code.
+        message:
+          type: string
+          description: Error message.

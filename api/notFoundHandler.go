@@ -7,8 +7,8 @@ import (
 
 func Handle404() http.Handler {
 	type ProtocolError struct {
-		Code    int
-		Message string
+		Code    int    `json:"code"`
+		Message string `json:"message"`
 	}
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
