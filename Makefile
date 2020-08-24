@@ -6,42 +6,28 @@
 # -a              -> force rebuilding of packages that are already up-to-date.
 
 BINARY_NAME=tp-link-hs110-api
-BINARY_AMD64=$(BINARY_NAME)_amd64
-BINARY_ARM=$(BINARY_NAME)_arm
-BINARY_WINDOWS=$(BINARY_NAME)_windows.exe
-
-all: clean test build
+CONTAINER_NAME=tp-link-hs110-api
+IMAGE_NAME=larmic/tp-link-hs110-api
+IMAGE_TAG=latest
 
 run:
-	@go run main.go
+	go run main.go
 
-build: deps
-	@echo "Build executable"
-	@go build -a -o bin/$(BINARY_NAME)
-	@echo "Done"
+docker-all: docker-build docker-push
 
-test:
-	@echo "Run tests"
-	go test -v ./...
-	@echo "Done"
+docker-build:
+	@echo "Remove docker image if already exists"
+	docker rmi -f ${IMAGE_NAME}:${IMAGE_TAG}
+	@echo "Build go docker image"
+	docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
+	@echo "Prune intermediate images"
+	docker image prune --filter label=stage=intermediate -f
 
-clean:
-	@echo "Clean up go and bin directory"
-	@go clean
-	@rm -f bin/$(BINARY_NAME)
-	@rm -f bin/$(BINARY_AMD64)
-	@rm -f bin/$(BINARY_ARM)
-	@rm -f bin/$(BINARY_WINDOWS)
-	@rmdir bin
-	@echo "Done"
+docker-push:
+	docker push ${IMAGE_NAME}:${IMAGE_TAG}
 
-deps:
-	@echo "Get dependencies"
-	@go get
-	@echo "Done"
+docker-run:
+	docker run -d -p 8080:8080 --rm --name --rm --name ${CONTAINER_NAME} ${IMAGE_NAME}
 
-compile:
-	@echo "Compiling for every OS and Platform"
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o bin/$(BINARY_AMD64)
-	CGO_ENABLED=0 GOOS=linux GOARCH=arm GOARM=5 go build -a -o bin/$(BINARY_ARM)
-	CGO_ENABLED=0 GOOS=windows GOARCH=386 go build -a -o bin/$(BINARY_WINDOWS)
+docker-stop:
+	docker stop ${CONTAINER_NAME}
