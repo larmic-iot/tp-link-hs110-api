@@ -17,7 +17,7 @@ const (
 )
 
 func Index(w http.ResponseWriter, _ *http.Request) {
-	w.Header().Set("Content-Type", "text/plain")
+	w.Header().Set("Content-Type", "text/plain; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 	_, _ = fmt.Fprintln(w, "Hello tp-link-hs110-api!")
 }
@@ -31,7 +31,7 @@ func InfoHandler(w http.ResponseWriter, r *http.Request) {
 	response, err := socketClient.RequestInfo()
 
 	if err != nil {
-		w.Header().Add("Content-Type", "text/plain")
+		w.Header().Add("Content-Type", "text/plain; charset=UTF-8")
 		w.WriteHeader(http.StatusNotFound)
 		_, _ = fmt.Fprintf(w, "%s not found!", key)
 	}
