@@ -17,12 +17,6 @@ const (
 	timeoutInMs = 500
 )
 
-func Index(w http.ResponseWriter, _ *http.Request) {
-	w.Header().Set("Content-Type", "text/plain; charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
-	_, _ = fmt.Fprintln(w, "Hello tp-link-hs110-api!")
-}
-
 func InfoHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	key := vars["ip"]
@@ -39,7 +33,7 @@ func InfoHandler(w http.ResponseWriter, r *http.Request) {
 
 	ledState := model.On
 
-	if response.LedOff == 0 {
+	if response.LedOff == 1 {
 		ledState = model.Off
 	}
 

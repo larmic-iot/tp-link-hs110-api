@@ -15,10 +15,10 @@ type Routes []Route
 
 var routes = Routes{
 	Route{
-		Name:        "Index",
+		Name:        "Open Api documentation (yaml)",
 		Method:      "GET",
 		Pattern:     "/",
-		HandlerFunc: Index,
+		HandlerFunc: OpenApiDocumentation,
 	},
 	Route{
 		Name:        "Open Api documentation (yaml)",

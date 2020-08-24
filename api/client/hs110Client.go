@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net"
+	"strconv"
 	"time"
 
 	"tp-link-hs110-api/api/client/crypto"
@@ -101,7 +102,7 @@ func (d *TpLinkHS110Client) RequestSwitchOff() (string, error) {
 func (d *TpLinkHS110Client) request(message string) (string, error) {
 	encryptor := crypto.NewEncryptor(d.printDebug)
 	dialer := net.Dialer{Timeout: time.Duration(d.timoutInMs) * time.Millisecond}
-	conn, err := dialer.Dial("tcp", d.ip+":9999")
+	conn, err := dialer.Dial("tcp", d.ip+":"+strconv.Itoa(d.port))
 
 	if err != nil {
 		return "", err
