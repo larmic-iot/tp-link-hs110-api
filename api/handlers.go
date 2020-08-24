@@ -43,10 +43,10 @@ func InfoHandler(w http.ResponseWriter, r *http.Request) {
 		ledState = model.Off
 	}
 
-	switchState := model.On
+	powerState := model.On
 
 	if response.RelayState == 0 {
-		switchState = model.Off
+		powerState = model.Off
 	}
 
 	info := model.Info{
@@ -59,7 +59,7 @@ func InfoHandler(w http.ResponseWriter, r *http.Request) {
 		SoftwareVersion: response.SoftwareVersion,
 		HardwareVersion: response.HardwareVersion,
 		Led:             ledState,
-		Switch:          switchState,
+		Power:           powerState,
 	}
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -87,5 +87,5 @@ func OpenApiDocumentation(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/yaml; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 	dat, _ := ioutil.ReadFile("open-api-3.yaml")
-	w.Write(dat)
+	_, _ = w.Write(dat)
 }

@@ -1,15 +1,3 @@
-# Go parameters
-
-# go get
-# go test -v ./...
-# CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -a -o tp-link-hs110-api
-# go clean
-
-# CGO_ENABLED=0   -> Disable interoperate with C libraries -> speed up build time! Enable it, if dependencies use C libraries!
-# GOOS=linux      -> compile to linux because scratch docker file is linux
-# GOARCH=amd64    -> because, hmm, everthing works fine with 64 bit :)
-# -a              -> force rebuilding of packages that are already up-to-date.
-
 CONTAINER_NAME=tp-link-hs110-api
 IMAGE_NAME=larmic/tp-link-hs110-api
 IMAGE_TAG=latest

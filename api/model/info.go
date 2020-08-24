@@ -10,12 +10,12 @@ const (
 type Info struct {
 	Ip              string `json:"ip"`
 	Port            int    `json:"port"`
-	Name            string `json:"alias"`
-	Icon            string `json:"icon_hash"`
+	Name            string `json:"name"`
+	Icon            string `json:"icon"`
 	Model           string `json:"model"`
 	MacAddress      string `json:"mac"`
 	SoftwareVersion string `json:"softwareVersion"`
 	HardwareVersion string `json:"hardwareVersion"`
 	Led             Switch `json:"led"`
-	Switch          Switch `json:"switch"`
+	Power           Switch `json:"power"`
 }

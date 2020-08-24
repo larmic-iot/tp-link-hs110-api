@@ -55,10 +55,10 @@ components:
         port:
           type: int
           description: Smart plug port (i.e. 9999).
-        alias:
+        name:
           type: string
           description: Smart plug name or alias.
-        icon_hash:
+        icon:
           type: string
           description: Smart plug icon hash.
         model:
@@ -79,7 +79,7 @@ components:
           enum:
             - on
             - off
-        switch:
+        power:
           type: string
           description: Smart plug power switch state.
           enum:
