@@ -6,8 +6,8 @@ import (
 	"net"
 	"time"
 
-	"tp-link-hs110-api/client/crypto"
-	"tp-link-hs110-api/client/ioutil"
+	"tp-link-hs110-api/api/client/crypto"
+	"tp-link-hs110-api/api/client/ioutil"
 )
 
 type TpLinkHS110Client struct {

@@ -7,7 +7,7 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"tp-link-hs110-api/client"
+	"tp-link-hs110-api/api/client"
 )
 
 const (
