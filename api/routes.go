@@ -1,7 +1,6 @@
 package api
 
 import (
-	"encoding/json"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -55,21 +54,4 @@ var routes = Routes{
 		Pattern:     "/api/{ip}/energy",
 		HandlerFunc: EnergyHandler,
 	},
-}
-
-func Handle404() http.Handler {
-	type ProtocolError struct {
-		Code    int
-		Message string
-	}
-
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		json.
-			NewEncoder(w).
-			Encode(
-				ProtocolError{
-					Code:    http.StatusNotFound,
-					Message: http.StatusText(http.StatusNotFound),
-				})
-	})
 }
