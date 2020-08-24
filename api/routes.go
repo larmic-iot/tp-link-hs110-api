@@ -21,6 +21,12 @@ var routes = Routes{
 		HandlerFunc: Index,
 	},
 	Route{
+		Name:        "Open Api documentation (yaml)",
+		Method:      "GET",
+		Pattern:     "/api",
+		HandlerFunc: OpenApiDocumentation,
+	},
+	Route{
 		Name:        "Info",
 		Method:      "GET",
 		Pattern:     "/api/{ip}",
