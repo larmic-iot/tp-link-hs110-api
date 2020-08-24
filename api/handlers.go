@@ -8,6 +8,7 @@ import (
 	"github.com/gorilla/mux"
 
 	"tp-link-hs110-api/api/client"
+	"tp-link-hs110-api/api/model"
 )
 
 const (
@@ -33,8 +34,25 @@ func InfoHandler(w http.ResponseWriter, r *http.Request) {
 		_, _ = w.Write([]byte(key + " not found."))
 	}
 
+	led := false
+
+	if response.LedOff == 0 {
+		led = true
+	}
+
+	info := model.Info{
+		Identifier:      key,
+		Name:            response.Alias,
+		Icon:            response.Icon,
+		Model:           response.Model,
+		MacAddress:      response.MacAddress,
+		SoftwareVersion: response.SoftwareVersion,
+		HardwareVersion: response.HardwareVersion,
+		Led:             led,
+	}
+
 	w.Header().Add("Content-Type", "application/json")
-	_ = json.NewEncoder(w).Encode(response)
+	_ = json.NewEncoder(w).Encode(info)
 }
 
 func EnergyHandler(w http.ResponseWriter, r *http.Request) {
