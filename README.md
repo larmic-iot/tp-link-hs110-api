@@ -3,6 +3,14 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Build Status](https://travis-ci.com/larmic/tp-link-hs110-api.svg?branch=master)](https://travis-ci.com/larmic/tp-link-hs110-api)
 
+A rest api client for the proprietary TP-Link Smart Home protocol to control TP-Link HS110 WiFi Smart Plugs. 
+The SmartHome protocol runs on TCP port 9999 and uses a trivial XOR autokey encryption that provides no security.
+
+This project based on [tplink-smartplug written in python](https://github.com/softScheck/tplink-smartplug) and 
+improves my Go knowledge.
+
+There is no authentication mechanism and REST endpoints documented in [open api 3.1](open-api-3.yaml).
+
 ## Requirements
 
 * Docker 
