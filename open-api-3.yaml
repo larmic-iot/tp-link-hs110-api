@@ -25,7 +25,9 @@ paths:
         '200':
           description: Smart plug
           content:
-            'application/json': {}
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/Info"
         '404':
           description: Smart plug not found.
           content:
@@ -35,8 +37,55 @@ paths:
 
 components:
   schemas:
+    Info:
+      required:
+        - ip
+        - port
+        - alias
+        - model
+        - mac
+        - softwareVersion
+        - hardwareVersion
+        - led
+        - switch
+      properties:
+        ip:
+          type: string
+          description: Smart plug ip addres (i.e. 10.0.0.100).
+        port:
+          type: int
+          description: Smart plug port (i.e. 9999).
+        alias:
+          type: string
+          description: Smart plug name or alias.
+        icon_hash:
+          type: string
+          description: Smart plug icon hash.
+        model:
+          type: string
+          description: Smart plug model.
+        mac:
+          type: string
+          description: Smart plug mac address.
+        softwareVersion:
+          type: string
+          description: Smart plug software version.
+        hardwareVersion:
+          type: string
+          description: Smart plug hardware version.
+        led:
+          type: string
+          description: Smart plug led state.
+          enum:
+            - on
+            - off
+        switch:
+          type: string
+          description: Smart plug power switch state.
+          enum:
+            - on
+            - off
     ProtocolError:
-      type: object
       required:
         - code
         - message
