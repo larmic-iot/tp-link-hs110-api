@@ -36,21 +36,29 @@ func InfoHandler(w http.ResponseWriter, r *http.Request) {
 		_, _ = fmt.Fprintf(w, "%s not found!", key)
 	}
 
-	led := false
+	ledState := model.On
 
 	if response.LedOff == 0 {
-		led = true
+		ledState = model.Off
+	}
+
+	switchState := model.On
+
+	if response.RelayState == 0 {
+		switchState = model.Off
 	}
 
 	info := model.Info{
-		Identifier:      key,
+		Ip:              key,
+		Port:            9999,
 		Name:            response.Alias,
 		Icon:            response.Icon,
 		Model:           response.Model,
 		MacAddress:      response.MacAddress,
 		SoftwareVersion: response.SoftwareVersion,
 		HardwareVersion: response.HardwareVersion,
-		Led:             led,
+		Led:             ledState,
+		Switch:          switchState,
 	}
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
