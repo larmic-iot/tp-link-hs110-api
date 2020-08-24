@@ -17,6 +17,8 @@ const (
 )
 
 func Index(w http.ResponseWriter, _ *http.Request) {
+	w.Header().Set("Content-Type", "text/plain")
+	w.WriteHeader(http.StatusOK)
 	_, _ = fmt.Fprintln(w, "Hello tp-link-hs110-api!")
 }
 
@@ -29,9 +31,9 @@ func InfoHandler(w http.ResponseWriter, r *http.Request) {
 	response, err := socketClient.RequestInfo()
 
 	if err != nil {
-		w.WriteHeader(http.StatusNotFound)
 		w.Header().Add("Content-Type", "text/plain")
-		_, _ = w.Write([]byte(key + " not found."))
+		w.WriteHeader(http.StatusNotFound)
+		_, _ = fmt.Fprintf(w, "%s not found!", key)
 	}
 
 	led := false
@@ -51,7 +53,8 @@ func InfoHandler(w http.ResponseWriter, r *http.Request) {
 		Led:             led,
 	}
 
-	w.Header().Add("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusOK)
 	_ = json.NewEncoder(w).Encode(info)
 }
 
