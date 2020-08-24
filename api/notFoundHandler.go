@@ -3,14 +3,11 @@ package api
 import (
 	"encoding/json"
 	"net/http"
+
+	"tp-link-hs110-api/api/model"
 )
 
 func Handle404() http.Handler {
-	type ProtocolError struct {
-		Code    int    `json:"code"`
-		Message string `json:"message"`
-	}
-
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Content-Type", "text/plain; charset=UTF-8")
 		w.WriteHeader(http.StatusNotFound)
@@ -18,7 +15,7 @@ func Handle404() http.Handler {
 		_ = json.
 			NewEncoder(w).
 			Encode(
-				ProtocolError{
+				model.ProtocolError{
 					Code:    http.StatusNotFound,
 					Message: http.StatusText(http.StatusNotFound),
 				})

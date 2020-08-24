@@ -27,10 +27,10 @@ var routes = Routes{
 		HandlerFunc: OpenApiDocumentation,
 	},
 	Route{
-		Name:        "Info",
+		Name:        "System",
 		Method:      "GET",
 		Pattern:     "/api/{ip}",
-		HandlerFunc: InfoHandler,
+		HandlerFunc: GetSystemHandler,
 	},
 	Route{
 		Name:        "Energy",

@@ -27,7 +27,7 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: "#/components/schemas/Info"
+                $ref: "#/components/schemas/System"
         '404':
           description: Smart plug not found.
           content:
@@ -37,7 +37,7 @@ paths:
 
 components:
   schemas:
-    Info:
+    System:
       required:
         - ip
         - port

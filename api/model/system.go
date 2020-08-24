@@ -7,7 +7,7 @@ const (
 	Off        = "off"
 )
 
-type Info struct {
+type System struct {
 	Ip              string `json:"ip"`
 	Port            int    `json:"port"`
 	Name            string `json:"name"`
