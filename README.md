@@ -21,7 +21,7 @@ $ make IMAGE_TAG="0.0.1" docker-all # build and push docker image with specific 
 $ make clean                        # clean up go and build folder
 ```
 
-# Run it native
+## Run it native
 
 ```sh 
 $ make run                                   # start native app 
@@ -29,7 +29,7 @@ $ curl http://localhost:8080/api/10.0.0.210  # call rest service
 $ ctrl+c                                     # stop native app
 ```
 
-# Run it using docker
+## Run it using docker
 
 ```sh 
 $ make docker-run                            # start docker image 
