@@ -13,7 +13,7 @@ info:
 paths:
   /api/{plugIp}:
     get:
-      summary: Returns a smart plug by ip.
+      summary: Returns a smart plug general info by ip.
       parameters:
         - name: plugIp
           in: path
@@ -34,6 +34,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ProtocolError"
+  /api/{plugIp}/energy:
+    get:
+      summary: Returns a smart plug energy info by ip.
+      parameters:
+        - name: plugIp
+          in: path
+          required: true
+          description: ip address of plug (i.e. 10.0.0.100)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Smart plug energy info
+          content:
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/Energy"
+        '404':
+          description: Smart plug not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProtocolError"
+
 
 components:
   schemas:
@@ -85,6 +109,13 @@ components:
           enum:
             - on
             - off
+    Energy:
+      required:
+        - watt
+      properties:
+        watt:
+          type: integer
+          description: Watt (or power) in milli watt
     ProtocolError:
       required:
         - code
