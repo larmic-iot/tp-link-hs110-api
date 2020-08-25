@@ -5,11 +5,6 @@ import (
 	"net/http"
 )
 
-const (
-	printDebug  = false
-	timeoutInMs = 500
-)
-
 func OpenApiDocumentation(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/yaml; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
