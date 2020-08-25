@@ -7,6 +7,7 @@ import (
 	"github.com/gorilla/mux"
 
 	"tp-link-hs110-api/api/client"
+	clientModel "tp-link-hs110-api/api/client/model"
 	"tp-link-hs110-api/api/model"
 )
 
@@ -39,7 +40,7 @@ func GetSystemHandler(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewEncoder(w).Encode(system)
 }
 
-func mapClientModelToApiModel(ip string, systemInfo client.SystemInfo) model.System {
+func mapClientModelToApiModel(ip string, systemInfo clientModel.SystemInfo) model.System {
 	ledState := model.On
 
 	if systemInfo.LedOff == 1 {
