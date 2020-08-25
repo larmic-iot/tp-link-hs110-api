@@ -40,23 +40,37 @@ func NewTpLinkHS110Client(ip string, timoutInMs int, printDebug bool) *TpLinkHS1
 func (d *TpLinkHS110Client) RequestInfo() (model.SystemInfo, error) {
 	response, err := d.request(info)
 
-	var systemWrapper model.SystemWrapper
+	var wrapper model.SystemWrapper
 
 	if err != nil {
 		return model.SystemInfo{}, err
 	}
 
-	err = json.Unmarshal([]byte(response), &systemWrapper)
+	err = json.Unmarshal([]byte(response), &wrapper)
 
 	if err != nil {
 		return model.SystemInfo{}, err
 	}
 
-	return systemWrapper.System.SystemInfo, err
+	return wrapper.System.SystemInfo, err
 }
 
-func (d *TpLinkHS110Client) RequestCurrentEnergyStatistics() (string, error) {
-	return d.request(emeter)
+func (d *TpLinkHS110Client) RequestCurrentEnergyStatistics() (model.EMeterInfo, error) {
+	response, err := d.request(emeter)
+
+	var wrapper model.EMeterWrapper
+
+	if err != nil {
+		return model.EMeterInfo{}, err
+	}
+
+	err = json.Unmarshal([]byte(response), &wrapper)
+
+	if err != nil {
+		return model.EMeterInfo{}, err
+	}
+
+	return wrapper.EMeter.EMeterInfo, err
 }
 
 func (d *TpLinkHS110Client) RequestSwitchOn() (string, error) {
