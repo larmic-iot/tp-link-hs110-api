@@ -14,10 +14,19 @@ There is no authentication mechanism and REST endpoints documented in [open api 
 
 ## Usage
 
+The easiest way is to use the Docker image. Otherwise, the artifact will have to be built by yourself.
+
 ```sh 
 $ docker pull larmic/tp-link-hs110-api
 $ docker run -d -p 8080:8080 --rm --name larmic-tp-link-hs110-api larmic/tp-link-hs110-api
-$ curl http://localhost:8080
+```
+
+## Example requests
+
+```sh 
+$ curl http://localhost:8080                    # Open Api 3.1 specification
+$ curl http://localhost:8080/10.0.0.1           # General energy plug information
+$ curl http://localhost:8080/10.0.0.1/energy    # Energy consumption
 ```
 
 ## Build application by yourself
@@ -30,18 +39,18 @@ $ curl http://localhost:8080
 ### Build it
 
 ```sh 
-$ make docker-build                          # build local docker image
-$ make docker-push                           # push local docker image to hub.docker.com
-$ make docker-all                            # build and push docker image to hub.docker.com
-$ make IMAGE_TAG="0.0.1" docker-all          # build and push docker image with specific version
+$ make docker-build                             # build local docker image
+$ make docker-push                              # push local docker image to hub.docker.com
+$ make docker-all                               # build and push docker image to hub.docker.com
+$ make IMAGE_TAG="0.0.1" docker-all             # build and push docker image with specific version
 ```
 
 ### Run it native
 
 ```sh 
-$ make run                                   # start native app 
-$ curl http://localhost:8080/api/10.0.0.210  # call rest service
-$ ctrl+c                                     # stop native app
+$ make run                                      # start native app 
+$ curl http://localhost:8080/api/10.0.0.210     # call rest service
+$ ctrl+c                                        # stop native app
 ```
 
 ### Run it using docker
