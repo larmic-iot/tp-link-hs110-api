@@ -7,17 +7,27 @@
 A rest api client for the proprietary TP-Link Smart Home protocol to control TP-Link HS110 WiFi Smart Plugs. 
 The SmartHome protocol runs on TCP port 9999 and uses a trivial XOR autokey encryption that provides no security.
 
-This project based on [tplink-smartplug written in python](https://github.com/softScheck/tplink-smartplug) and 
+This project inspired by [tplink-smartplug written in python](https://github.com/softScheck/tplink-smartplug) and 
 improves my Go knowledge.
 
 There is no authentication mechanism and REST endpoints documented in [open api 3.1](open-api-3.yaml).
 
-## Requirements
+## Usage
+
+```sh 
+$ docker pull larmic/tp-link-hs110-api
+$ docker run -d -p 8080:8080 --rm --name larmic-tp-link-hs110-api larmic/tp-link-hs110-api
+$ curl http://localhost:8080
+```
+
+## Build application by yourself
+
+### Requirements
 
 * Docker 
 * Go 1.15.x (if you want to build it without using docker builder)
 
-## Build it
+### Build it
 
 ```sh 
 $ make docker-build                          # build local docker image
@@ -26,7 +36,7 @@ $ make docker-all                            # build and push docker image to hu
 $ make IMAGE_TAG="0.0.1" docker-all          # build and push docker image with specific version
 ```
 
-## Run it native
+### Run it native
 
 ```sh 
 $ make run                                   # start native app 
@@ -34,7 +44,7 @@ $ curl http://localhost:8080/api/10.0.0.210  # call rest service
 $ ctrl+c                                     # stop native app
 ```
 
-## Run it using docker
+### Run it using docker
 
 ```sh 
 $ make docker-run                            # start docker image 

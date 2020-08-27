@@ -19,7 +19,7 @@ docker-push:
 	docker push ${IMAGE_NAME}:${IMAGE_TAG}
 
 docker-run:
-	docker run -d -p 8080:8080 --rm --name --rm --name ${CONTAINER_NAME} ${IMAGE_NAME}
+	docker run -d -p 8080:8080 --rm --name ${CONTAINER_NAME} ${IMAGE_NAME}
 
 docker-stop:
 	docker stop ${CONTAINER_NAME}
