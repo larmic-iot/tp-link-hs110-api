@@ -2,6 +2,7 @@ package client
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net"
 	"strconv"
@@ -21,8 +22,9 @@ type TpLinkHS110Client struct {
 
 const (
 	// see https://github.com/softScheck/tplink-smartplug/blob/master/tplink-smarthome-commands.txt
-	emeter        = "{\"emeter\":{\"get_realtime\":null}}"
-	info          = "{\"system\":{\"get_sysinfo\":null}}"
+	emeter        = "{\"emeter\":{\"get_realtime\":{}}}"
+	dailyEMeter   = "{\"emeter\":{\"get_daystat\":{\"month\":%d,\"year\":%d}}}"
+	info          = "{\"system\":{\"get_sysinfo\":{}}}"
 	on            = "{\"system\":{\"set_relay_state\":{\"state\":1}}}}"
 	off           = "{\"system\":{\"set_relay_state\":{\"state\":0}}}}"
 	StopCharacter = "\r\n\r\n"
@@ -58,12 +60,11 @@ func (d *TpLinkHS110Client) RequestInfo() (model.SystemInfo, error) {
 func (d *TpLinkHS110Client) RequestCurrentEnergyStatistics() (model.EMeterInfo, error) {
 	response, err := d.request(emeter)
 
-	var wrapper model.EMeterWrapper
-
 	if err != nil {
 		return model.EMeterInfo{}, err
 	}
 
+	var wrapper model.EMeterWrapper
 	err = json.Unmarshal([]byte(response), &wrapper)
 
 	if err != nil {
@@ -71,6 +72,33 @@ func (d *TpLinkHS110Client) RequestCurrentEnergyStatistics() (model.EMeterInfo, 
 	}
 
 	return wrapper.EMeter.EMeterInfo, err
+}
+
+func (d *TpLinkHS110Client) RequestDailyEnergyStatistics() (model.DayStatEMeterInfo, error) {
+	year, month, day := time.Now().Date()
+	fmt.Println(year)
+	fmt.Println(month)
+	fmt.Println(day)
+	response, err := d.request(fmt.Sprintf(dailyEMeter, month, year))
+
+	if err != nil {
+		return model.DayStatEMeterInfo{}, err
+	}
+
+	var wrapper model.DayStatEMeterWrapper
+	err = json.Unmarshal([]byte(response), &wrapper)
+
+	if err != nil {
+		return model.DayStatEMeterInfo{}, err
+	}
+
+	for _, value := range wrapper.DayStatEMeter.DayStatEMeterInfos.DayStatEMeterInfos {
+		if value.Day == day {
+			return value, nil
+		}
+	}
+
+	return model.DayStatEMeterInfo{}, nil
 }
 
 func (d *TpLinkHS110Client) RequestSwitchOn() (string, error) {

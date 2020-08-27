@@ -112,10 +112,14 @@ components:
     Energy:
       required:
         - watt
+        - dailyConsumption
       properties:
         watt:
           type: integer
           description: Watt (or power) in milli watt
+        dailyConsumption:
+          type: integer
+          description: Current consumption (of the day) in watt per hours
     ProtocolError:
       required:
         - code

@@ -17,9 +17,10 @@ func EnergyHandler(w http.ResponseWriter, r *http.Request) {
 
 	socketClient := client.NewTpLinkHS110Client(ip, timeoutInMs, printDebug)
 
-	response, err := socketClient.RequestCurrentEnergyStatistics()
+	currentEnergyResponse, err := socketClient.RequestCurrentEnergyStatistics()
+	dailyEnergyResponse, err2 := socketClient.RequestDailyEnergyStatistics()
 
-	if err != nil {
+	if err != nil || err2 != nil {
 		w.Header().Add("Content-Type", "text/plain; charset=UTF-8")
 		w.WriteHeader(http.StatusNotFound)
 
@@ -33,15 +34,16 @@ func EnergyHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	energy := mapEnergyModel(response)
+	energy := mapEnergyModel(currentEnergyResponse, dailyEnergyResponse)
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 	_ = json.NewEncoder(w).Encode(energy)
 }
 
-func mapEnergyModel(eMeterInfo clientModel.EMeterInfo) model.Energy {
+func mapEnergyModel(eMeterInfo clientModel.EMeterInfo, dailyEMeterInfo clientModel.DayStatEMeterInfo) model.Energy {
 	return model.Energy{
-		Watt: eMeterInfo.Power,
+		Watt:             eMeterInfo.Power,
+		DailyConsumption: dailyEMeterInfo.EnergyWattHours,
 	}
 }
