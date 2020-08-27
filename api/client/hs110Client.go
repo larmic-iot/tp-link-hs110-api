@@ -74,11 +74,7 @@ func (d *TpLinkHS110Client) RequestCurrentEnergyStatistics() (model.EMeterInfo, 
 	return wrapper.EMeter.EMeterInfo, err
 }
 
-func (d *TpLinkHS110Client) RequestDailyEnergyStatistics() (model.DayStatEMeterInfo, error) {
-	year, month, day := time.Now().Date()
-	fmt.Println(year)
-	fmt.Println(month)
-	fmt.Println(day)
+func (d *TpLinkHS110Client) RequestDailyEnergyStatistics(year int, month time.Month, day int) (model.DayStatEMeterInfo, error) {
 	response, err := d.request(fmt.Sprintf(dailyEMeter, month, year))
 
 	if err != nil {

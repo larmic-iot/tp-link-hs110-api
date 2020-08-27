@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
 
@@ -14,11 +15,12 @@ import (
 func EnergyHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	ip := vars["ip"]
+	year, month, day := time.Now().Date()
 
 	socketClient := client.NewTpLinkHS110Client(ip, timeoutInMs, printDebug)
 
 	currentEnergyResponse, err := socketClient.RequestCurrentEnergyStatistics()
-	dailyEnergyResponse, err2 := socketClient.RequestDailyEnergyStatistics()
+	dailyEnergyResponse, err2 := socketClient.RequestDailyEnergyStatistics(year, month, day)
 
 	if err != nil || err2 != nil {
 		w.Header().Add("Content-Type", "text/plain; charset=UTF-8")
