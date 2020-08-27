@@ -56,7 +56,7 @@ $ ctrl+c                                        # stop native app
 ### Run it using docker
 
 ```sh 
-$ make docker-run                            # start docker image 
-$ curl http://localhost:8080/api/10.0.0.210  # call rest service
-$ make docker-stop                           # stop and remove docker app
+$ make docker-run                               # start docker image 
+$ curl http://localhost:8080/api/10.0.0.210     # call rest service
+$ make docker-stop                              # stop and remove docker app
 ```
