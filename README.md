@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.com/larmic/tp-link-hs110-api.svg?branch=master)](https://travis-ci.com/larmic/tp-link-hs110-api)
 [![Docker hub image](https://img.shields.io/docker/image-size/larmic/tp-link-hs110-api?label=dockerhub)](https://hub.docker.com/repository/docker/larmic/tp-link-hs110-api)
 
-A rest api client for the proprietary TP-Link Smart Home protocol to control TP-Link HS110 WiFi Smart Plugs. 
+A REST api client (adapter) for the proprietary TP-Link Smart Home protocol to control TP-Link HS110 WiFi Smart Plugs. 
 The SmartHome protocol runs on TCP port 9999 and uses a trivial XOR autokey encryption that provides no security.
 
 This project inspired by [tplink-smartplug written in python](https://github.com/softScheck/tplink-smartplug) and 
