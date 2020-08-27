@@ -6,11 +6,11 @@
 
 A REST api client (adapter) for the proprietary TP-Link Smart Home protocol to control TP-Link HS110 WiFi Smart Plugs. 
 The SmartHome protocol runs on TCP port 9999 and uses a trivial XOR autokey encryption that provides no security.
+This application uses a REST api as a wrapper on the TCP socket connection. There is no authentication mechanism and 
+REST endpoints documented in [open api 3.1](open-api-3.yaml).
 
 This project inspired by [tplink-smartplug written in python](https://github.com/softScheck/tplink-smartplug) and 
 improves my Go knowledge.
-
-There is no authentication mechanism and REST endpoints documented in [open api 3.1](open-api-3.yaml).
 
 ## Usage
 
