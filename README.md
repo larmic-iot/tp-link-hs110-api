@@ -14,7 +14,7 @@ improves my Go knowledge.
 
 ## Usage
 
-The easiest way is to use the Docker image. Otherwise, the artifact will have to be built by yourself.
+The easiest way is to use the docker image. Otherwise, the artifact will have to be built by yourself.
 
 ```sh 
 $ docker pull larmic/tp-link-hs110-api
