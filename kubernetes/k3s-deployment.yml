@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tp-link-hs110-api
+  labels:
+    app: tp-link-hs110-api
+  namespace: larmic-power-consumption
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tp-link-hs110-api
+  template:
+    metadata:
+      labels:
+        app: tp-link-hs110-api
+    spec:
+      containers:
+        - name: tp-link-hs110-api
+          image: larmic/tp-link-hs110-api:latest
+          ports:
+            - containerPort: 8080
+              hostPort: 8081
