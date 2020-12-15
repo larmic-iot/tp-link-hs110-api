@@ -43,7 +43,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: https://hub.docker.com/
+          registry: https://hub.docker.com/
 
       - name: Push to docker hub
         uses: docker/build-push-action@v1
