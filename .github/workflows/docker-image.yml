@@ -4,6 +4,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
+    types: [closed]
     branches: [ main ]
 
 jobs:
@@ -16,7 +17,10 @@ jobs:
     - uses: actions/checkout@v2
       
     - name: Build the Docker image
-      run: DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag larmic/tp-link-hs110-api:$(date +%s)
+      run: DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag larmic/tp-link-hs110-api:latest
+
+    - name: Tag the Docker image with current timestamp
+      run: docker tag larmic/tp-link-hs110-api:latest larmic/tp-link-hs110-api:$(date +%s)
       
     - name: List Docker images
       run: docker images
