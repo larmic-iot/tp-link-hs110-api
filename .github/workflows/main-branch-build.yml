@@ -7,8 +7,6 @@ on:
 
 env:
   IMAGE_NAME: larmic/tp-link-hs110-api
-  LATEST_IMAGE: larmic/tp-link-hs110-api:latest
-  TIMESTAMP_IMAGE: larmic/tp-link-hs110-api:$(date +'%Y-%m-%d-%s')
 
 jobs:
 
@@ -17,11 +15,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get current date
-        id: date
+      - name: Setup image names
         run: |
-          echo "TEST=$IMAGE_NAME:$(date +'%Y-%m-%d-%sss')" >> $GITHUB_ENV
-          echo "TIMESTAMP_IMAGE_TAG=$(date +'%Y-%m-%d-%sss')" >> $GITHUB_ENV
+          echo "LATEST_IMAGE=$IMAGE_NAME:latest" >> $GITHUB_ENV
+          echo "TIMESTAMP_IMAGE=$IMAGE_NAME:$(date +'%Y-%m-%d-%s')" >> $GITHUB_ENV
 
       - name: Set up Go 1.15.x
         uses: actions/setup-go@v2
@@ -44,9 +41,6 @@ jobs:
         run: |
           echo DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag $LATEST_IMAGE --tag $TIMESTAMP_IMAGE
           DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag $LATEST_IMAGE --tag $TIMESTAMP_IMAGE
-        env:
-          LATEST_IMAGE: $IMAGE_NAME:latest
-          TIMESTAMP_IMAGE: $IMAGE_NAME:${{ steps.date.outputs.date }}
 
       - name: List Docker images
         run: docker images
@@ -59,5 +53,5 @@ jobs:
 
       - name: Push to DockerHub
         run: |
-          echo docker push $IMAGE_NAME --all-tags
-          docker push $IMAGE_NAME -a
+          docker push $LATEST_IMAGE
+          docker push $TIMESTAMP_IMAGE
