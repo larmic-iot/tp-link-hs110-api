@@ -44,6 +44,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: https://hub.docker.com/
+          repository: larmic
 
       - name: Push to docker hub
         uses: docker/build-push-action@v1
