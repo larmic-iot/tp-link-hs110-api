@@ -1,7 +1,7 @@
 # tp-link-hs110-api
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Build Status](https://travis-ci.com/larmic/tp-link-hs110-api.svg?branch=master)](https://travis-ci.com/larmic/tp-link-hs110-api)
+![Go](https://github.com/larmic/tp-link-hs110-api/workflows/Go/badge.svg)
 [![Docker hub image](https://img.shields.io/docker/image-size/larmic/tp-link-hs110-api?label=dockerhub)](https://hub.docker.com/repository/docker/larmic/tp-link-hs110-api)
 
 A REST api client (adapter) for the proprietary TP-Link Smart Home protocol to control TP-Link HS110 WiFi Smart Plugs. 
