@@ -10,6 +10,10 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+
+    env:
+      IMAGE_TAG: $(date +%s)
+
     steps:
 
       - name: Set up Go 1.15.x
@@ -31,8 +35,6 @@ jobs:
 
       - name: Build the Docker image
         run: DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag larmic/tp-link-hs110-api:latest
-        env: # Or as an environment variable
-          IMAGE_TAG: $(date +%s)
 
       - name: Tag the Docker image with current timestamp
         run: docker tag larmic/tp-link-hs110-api:latest larmic/tp-link-hs110-api:${{ IMAGE_TAG }}
@@ -47,4 +49,6 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push to DockerHub
-        run: docker push larmic/tp-link-hs110-api:latest
+        run: |
+          docker push larmic/tp-link-hs110-api:latest
+          docker push larmic/tp-link-hs110-api:${{ IMAGE_TAG }}
