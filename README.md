@@ -1,6 +1,7 @@
 # tp-link-hs110-api
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+![Go build](https://github.com/larmic/tp-link-hs110-api/workflows/Go%20build/badge.svg)
 ![Docker build and push](https://github.com/larmic/tp-link-hs110-api/workflows/Docker%20build%20and%20push/badge.svg)
 [![Docker hub image](https://img.shields.io/docker/image-size/larmic/tp-link-hs110-api?label=dockerhub)](https://hub.docker.com/repository/docker/larmic/tp-link-hs110-api)
 
