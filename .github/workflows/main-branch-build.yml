@@ -7,6 +7,8 @@ on:
 
 env:
   IMAGE_NAME: larmic/tp-link-hs110-api
+  LATEST_IMAGE: larmic/tp-link-hs110-api:latest
+  TIMESTAMP_IMAGE: larmic/tp-link-hs110-api:$(date +'%Y-%m-%d-%s')
 
 jobs:
 
