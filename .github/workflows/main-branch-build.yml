@@ -39,8 +39,10 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          echo DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag $IMAGE_NAME:latest --tag $IMAGE_NAME:${{ steps.date.outputs.date }}
-          DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag $IMAGE_NAME:latest --tag $IMAGE_NAME:${{ steps.date.outputs.date }}
+          echo DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag $IMAGE_NAME:latest --tag $IMAGE_NAME:$TIMESTAMP_IMAGE_TAG
+          DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag $IMAGE_NAME:latest --tag $IMAGE_NAME:$TIMESTAMP_IMAGE_TAG
+        env:
+          TIMESTAMP_IMAGE_TAG: ${{ steps.date.outputs.date }}
 
       - name: List Docker images
         run: docker images
