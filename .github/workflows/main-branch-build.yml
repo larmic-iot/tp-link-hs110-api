@@ -16,10 +16,6 @@ jobs:
 
     steps:
 
-      - name: Get current date
-        id: date
-        run: echo "TIMESTAMP_IMAGE_TAG=$(date +'%Y-%m-%d-%sss')" >> $GITHUB_ENV
-
       - name: Set up Go 1.15.x
         uses: actions/setup-go@v2
         with:
@@ -41,6 +37,8 @@ jobs:
         run: |
           echo DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag $IMAGE_NAME:latest --tag $IMAGE_NAME:$TIMESTAMP_IMAGE_TAG
           DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag $IMAGE_NAME:latest --tag $IMAGE_NAME:$TIMESTAMP_IMAGE_TAG
+        env:
+          TIMESTAMP_IMAGE_TAG: $(date +'%Y-%m-%d-%s')
 
       - name: List Docker images
         run: docker images
@@ -52,6 +50,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push to DockerHub
-        run: |
-          docker push $IMAGE_NAME:latest
-          docker push $IMAGE_NAME:TIMESTAMP_IMAGE_TAG
+        run: docker push $IMAGE_NAME --all-tags
