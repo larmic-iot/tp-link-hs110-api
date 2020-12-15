@@ -24,6 +24,12 @@ jobs:
 
       - name: Log
         run: echo IMAGE $IMAGE_NAME $TIMESTAMP_IMAGE_TAG
+        env:
+          IMAGE_NAME: larmic/tp-link-hs110-api
+          TIMESTAMP_IMAGE_TAG: $(date +%s)
+
+      - name: Log2
+        run: echo IMAGE $IMAGE_NAME $TIMESTAMP_IMAGE_TAG
 
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
