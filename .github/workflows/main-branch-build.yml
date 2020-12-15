@@ -5,14 +5,14 @@ on:
     branches:
       - 'main'
 
+env:
+  IMAGE_TAG: $(date +%s)
+
 jobs:
 
   build:
     name: Build
     runs-on: ubuntu-latest
-
-    env:
-      IMAGE_TAG: $(date +%s)
 
     steps:
 
