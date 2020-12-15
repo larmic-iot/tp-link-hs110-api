@@ -23,7 +23,7 @@ func TestHandle404(t *testing.T) {
 		t.Error("Did not get expected HTTP content type, got", response.Header().Get("Content-Type"))
 	}
 
-	if response.Body.String() != "{\"code\":404BREAK,\"message\":\"Not Found\"}\n" {
+	if response.Body.String() != "{\"code\":404,\"message\":\"Not Found\"}\n" {
 		t.Error("Did not get expected body, got", response.Body.String())
 	}
 }
