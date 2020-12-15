@@ -37,9 +37,12 @@ jobs:
         run: CGO_ENABLED=0 GOOS=linux go build -v ./...
 
       - name: Build the Docker image
-        run: DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag $IMAGE_NAME:latest --tag $IMAGE_NAME:$TIMESTAMP_IMAGE_TAG
+        run: |
+          echo DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag $LATEST_IMAGE --tag $TIMESTAMP_IMAGE
+          DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag $LATEST_IMAGE --tag $TIMESTAMP_IMAGE
         env:
-          TIMESTAMP_IMAGE_TAG: ${{ steps.date.outputs.date }}
+          LATEST_IMAGE: $IMAGE_NAME:latest
+          TIMESTAMP_IMAGE: $IMAGE_NAME:${{ steps.date.outputs.date }}
 
       - name: List Docker images
         run: docker images
