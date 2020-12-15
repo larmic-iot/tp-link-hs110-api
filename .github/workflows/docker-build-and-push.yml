@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Setup image names
+      - name: Set up image names
         run: |
           echo "LATEST_IMAGE=$IMAGE_NAME:latest" >> $GITHUB_ENV
           echo "TIMESTAMP_IMAGE=$IMAGE_NAME:$(date +'%Y-%m-%d-%s')" >> $GITHUB_ENV
