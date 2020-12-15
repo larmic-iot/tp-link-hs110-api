@@ -19,7 +19,9 @@ jobs:
     steps:
       - name: Get current date
         id: date
-        run: echo "TIMESTAMP_IMAGE_TAG=$(date +'%Y-%m-%d-%sss')" >> $GITHUB_ENV
+        run: |
+          echo "TEST=$IMAGE_NAME:$(date +'%Y-%m-%d-%sss')" >> $GITHUB_ENV
+          echo "TIMESTAMP_IMAGE_TAG=$(date +'%Y-%m-%d-%sss')" >> $GITHUB_ENV
 
       - name: Set up Go 1.15.x
         uses: actions/setup-go@v2
