@@ -38,8 +38,6 @@ jobs:
 
       - name: Tag the Docker image with current timestamp
         run: docker tag larmic/tp-link-hs110-api:latest larmic/tp-link-hs110-api:$TIMESTAMP_IMAGE_TAG
-        env:
-          IMAGE_TAG: $TIMESTAMP_IMAGE_TAG
 
       - name: List Docker images
         run: docker images
@@ -53,4 +51,4 @@ jobs:
       - name: Push to DockerHub
         run: |
           docker push larmic/tp-link-hs110-api:latest
-          docker push larmic/tp-link-hs110-api:${{ IMAGE_TAG }}
+          docker push larmic/tp-link-hs110-api:$TIMESTAMP_IMAGE_TAG
