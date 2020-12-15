@@ -6,7 +6,7 @@ on:
       - 'main'
 
 env:
-  IMAGE_TAG: $(date +%s)
+  TIMESTAMP_IMAGE_TAG: $(date +%s)
 
 jobs:
 
@@ -38,6 +38,8 @@ jobs:
 
       - name: Tag the Docker image with current timestamp
         run: docker tag larmic/tp-link-hs110-api:latest larmic/tp-link-hs110-api:${{ IMAGE_TAG }}
+        env:
+          IMAGE_TAG: ${{ TIMESTAMP_IMAGE_TAG }}
 
       - name: List Docker images
         run: docker images
