@@ -46,4 +46,6 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push to DockerHub
-        run: docker push $IMAGE_NAME --all-tags
+        run: |
+          echo docker push $IMAGE_NAME --all-tags
+          docker push $IMAGE_NAME --all-tags
