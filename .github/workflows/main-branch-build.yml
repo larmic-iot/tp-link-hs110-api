@@ -6,6 +6,7 @@ on:
       - 'main'
 
 env:
+  IMAGE_NAME: larmic/tp-link-hs110-api
   TIMESTAMP_IMAGE_TAG: $(date +%s)
 
 jobs:
@@ -34,7 +35,7 @@ jobs:
         run: CGO_ENABLED=0 GOOS=linux go build -v ./...
 
       - name: Build the Docker image
-        run: DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag larmic/tp-link-hs110-api:latest
+        run: DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag $IMAGE_NAME:latest
 
       - name: Tag the Docker image with current timestamp
         run: docker tag larmic/tp-link-hs110-api:latest larmic/tp-link-hs110-api:$TIMESTAMP_IMAGE_TAG
