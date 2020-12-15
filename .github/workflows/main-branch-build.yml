@@ -48,4 +48,4 @@ jobs:
       - name: Push to DockerHub
         run: |
           echo docker push $IMAGE_NAME --all-tags
-          docker push $IMAGE_NAME --all-tags
+          docker push $IMAGE_NAME -a
