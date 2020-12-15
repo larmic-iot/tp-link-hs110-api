@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Build the Docker image
+      run: DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag larmic/tp-link-hs110-api:$(date +%s)
+      
+    - name: List Docker images
+      run: docker images
