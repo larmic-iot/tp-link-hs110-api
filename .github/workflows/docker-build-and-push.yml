@@ -47,19 +47,19 @@ jobs:
         run: |
           echo build docker image $IMAGE_NAME:amd64
           DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=amd64" --tag $IMAGE_NAME:amd64 .
-          docker push IMAGE_NAME:amd64
+          docker push $IMAGE_NAME:amd64
 
           echo build docker image $IMAGE_NAME:arm/v6
           DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=arm GOARM=6" --tag $IMAGE_NAME:arm/v6 .
-          docker push IMAGE_NAME:arm/v6
+          docker push $IMAGE_NAME:arm/v6
 
           echo build docker image $IMAGE_NAME:arm/v7
           DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=arm GOARM=7" --tag $IMAGE_NAME:arm/v7 .
-          docker push IMAGE_NAME:arm/v7
+          docker push $IMAGE_NAME:arm/v7
 
           echo build docker image $IMAGE_NAME:arm64/v8
           DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=arm64 GOARM=8" --tag $IMAGE_NAME:arm64/v8 .
-          docker push IMAGE_NAME:arm64/v8
+          docker push $IMAGE_NAME:arm64/v8
 
           echo create manifest
           docker manifest create $LATEST_IMAGE $IMAGE_NAME:amd64 $IMAGE_NAME:arm/v6 $IMAGE_NAME:arm/v7 $IMAGE_NAME:arm64/v8
