@@ -63,7 +63,7 @@ jobs:
       - name: Build arm64v7 image
         run: |
           DOCKER_BUILDKIT=1 docker build --build-arg=CGO_ENABLED=$CGO_ENABLED --build-arg=GOARCH=$GOARCH --build-arg=GOARM=$GOARM --tag $IMAGE_NAME:arm64v7 .
-          docker push $IMAGE_NAME:arm32v7
+          docker push $IMAGE_NAME:arm64v7
         env:
           CGO_ENABLED: 0
           GOARCH: arm64
