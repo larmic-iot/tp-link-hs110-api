@@ -72,14 +72,14 @@ jobs:
       - name: List Docker images
         run: docker images
 
-      - name: Build the Docker image
+      - name: Build docker manifest
         run: |
           docker manifest create $LATEST_IMAGE $IMAGE_NAME:amd64 $IMAGE_NAME:arm32v7
           docker manifest create $TIMESTAMP_IMAGE $IMAGE_NAME:amd64 $IMAGE_NAME:arm32v7
-          docker manifest annotate $LATEST_IMAGE $IMAGE_NAME:arm32v7 --os linux --arch armv7
-          docker manifest annotate $LATEST_IMAGE $IMAGE_NAME:arm64v7 --os linux --arch arm64v7
-          docker manifest annotate $TIMESTAMP_IMAGE $IMAGE_NAME:arm32v7 --os linux --arch armv7
-          docker manifest annotate $TIMESTAMP_IMAGE $IMAGE_NAME:arm64v7 --os linux --arch arm64v7
+          docker manifest annotate $LATEST_IMAGE $IMAGE_NAME:arm32v7 --os linux --arch arm
+          docker manifest annotate $LATEST_IMAGE $IMAGE_NAME:arm64v7 --os linux --arch arm64
+          docker manifest annotate $TIMESTAMP_IMAGE $IMAGE_NAME:arm32v7 --os linux --arch arm
+          docker manifest annotate $TIMESTAMP_IMAGE $IMAGE_NAME:arm64v7 --os linux --arch arm64
           docker manifest push $LATEST_IMAGE
           docker manifest push $TIMESTAMP_IMAGE
         env:
