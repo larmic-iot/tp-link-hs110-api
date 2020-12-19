@@ -76,10 +76,10 @@ jobs:
         run: |
           docker manifest create $LATEST_IMAGE $IMAGE_NAME:amd64 $IMAGE_NAME:arm32v7
           docker manifest create $TIMESTAMP_IMAGE $IMAGE_NAME:amd64 $IMAGE_NAME:arm32v7
-          docker manifest annotate $LATEST_IMAGE $IMAGE_NAME:arm32v7 --plattform linux/arm/v7
-          docker manifest annotate $LATEST_IMAGE $IMAGE_NAME:arm64v7 --plattform linux/arm64/v7
-          docker manifest annotate $TIMESTAMP_IMAGE $IMAGE_NAME:arm32v7 --plattform linux/arm/v7
-          docker manifest annotate $TIMESTAMP_IMAGE $IMAGE_NAME:arm64v7 --plattform linux/arm64/v7
+          docker manifest annotate $LATEST_IMAGE $IMAGE_NAME:arm32v7 --os linux --arch armv7
+          docker manifest annotate $LATEST_IMAGE $IMAGE_NAME:arm64v7 --os linux --arch arm64v7
+          docker manifest annotate $TIMESTAMP_IMAGE $IMAGE_NAME:arm32v7 --os linux --arch armv7
+          docker manifest annotate $TIMESTAMP_IMAGE $IMAGE_NAME:arm64v7 --os linux --arch arm64v7
           docker manifest push $LATEST_IMAGE
           docker manifest push $TIMESTAMP_IMAGE
         env:
