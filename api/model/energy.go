@@ -1,6 +1,7 @@
 package model
 
 type Energy struct {
-	Watt             int64 `json:"watt"`
-	DailyConsumption int64 `json:"dailyConsumption"`
+	CurrentMW int64 `json:"current_mw"`
+	TodayWH   int64 `json:"today_wh"`
+	TotalWH   int64 `json:"total_wh"`
 }

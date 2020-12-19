@@ -45,7 +45,8 @@ func EnergyHandler(w http.ResponseWriter, r *http.Request) {
 
 func mapEnergyModel(eMeterInfo clientModel.EMeterInfo, dailyEMeterInfo clientModel.DayStatEMeterInfo) model.Energy {
 	return model.Energy{
-		Watt:             eMeterInfo.Power,
-		DailyConsumption: dailyEMeterInfo.EnergyWattHours,
+		CurrentMW: eMeterInfo.Power,
+		TodayWH:   dailyEMeterInfo.EnergyWattHours,
+		TotalWH:   eMeterInfo.TotalWattHours,
 	}
 }
