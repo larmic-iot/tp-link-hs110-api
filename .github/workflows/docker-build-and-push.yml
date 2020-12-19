@@ -47,22 +47,22 @@ jobs:
         run: |
           echo ""
           echo build docker image $IMAGE_NAME:amd64
-          DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=amd64" --tag $IMAGE_NAME:amd64 .
+          DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=amd64" --pull --tag $IMAGE_NAME:amd64 .
           docker push $IMAGE_NAME:amd64
 
           echo ""
           echo build docker image $IMAGE_NAME:arm32v6
-          DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=arm GOARM=6" --tag $IMAGE_NAME:arm32v6 .
+          DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=arm GOARM=6" --pull --tag $IMAGE_NAME:arm32v6 .
           docker push $IMAGE_NAME:arm32v6
 
           echo ""
           echo build docker image $IMAGE_NAME:arm32v7
-          DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=arm GOARM=7" --tag $IMAGE_NAME:arm32v7 .
+          DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=arm GOARM=7" --pull --tag $IMAGE_NAME:arm32v7 .
           docker push $IMAGE_NAME:arm32v7
 
           echo ""
           echo build docker image $IMAGE_NAME:arm64v8
-          DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=arm64 GOARM=8" --tag $IMAGE_NAME:arm64v8 .
+          DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=arm64 GOARM=8" --pull --tag $IMAGE_NAME:arm64v8 .
           docker push $IMAGE_NAME:arm64v8
 
           export DOCKER_CLI_EXPERIMENTAL=enabled
