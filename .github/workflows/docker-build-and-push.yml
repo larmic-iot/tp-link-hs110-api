@@ -47,6 +47,9 @@ jobs:
         run: |
           echo build docker image $IMAGE_NAME:amd64
           DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=amd64" --tag $IMAGE_NAME:amd64 .
+
+          docker images
+
           docker push $IMAGE:amd64
 
           echo build docker image $IMAGE_NAME:arm/v6
