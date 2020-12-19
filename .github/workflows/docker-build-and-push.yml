@@ -61,6 +61,8 @@ jobs:
           DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=arm64 GOARM=8" --tag $IMAGE_NAME:arm64v8 .
           docker push $IMAGE_NAME:arm64v8
 
+          export DOCKER_CLI_EXPERIMENTAL=enabled
+
           echo create manifest
           docker manifest create $LATEST_IMAGE $IMAGE_NAME:amd64 $IMAGE_NAME:arm/v6 $IMAGE_NAME:arm/v7 $IMAGE_NAME:arm64/v8
           docker manifest create $TIMESTAMP_IMAGE $IMAGE_NAME:amd64 $IMAGE_NAME:arm/v6 $IMAGE_NAME:arm/v7 $IMAGE_NAME:arm64/v8
