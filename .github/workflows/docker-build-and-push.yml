@@ -46,7 +46,7 @@ jobs:
       - name: Build the Docker image
         run: |
           echo build docker image $IMAGE_NAME:amd64
-          DOCKER_BUILDKIT=1 docker build --build-arg ARCH=amd64/ opts="CGO_ENABLED=0 GOARCH=amd64" --tag $IMAGE_NAME:amd64 .
+          DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=amd64" --tag $IMAGE_NAME:amd64 .
 
           docker images
 
