@@ -34,7 +34,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ProtocolError"
-  /api/{plugIp}/energy:
+  /api/{plugIp}/consumption:
     get:
       summary: Returns a smart plug energy info by ip.
       parameters:
@@ -77,7 +77,7 @@ components:
           type: string
           description: Smart plug ip addres (i.e. 10.0.0.100).
         port:
-          type: int
+          type: integer
           description: Smart plug port (i.e. 9999).
         name:
           type: string
@@ -111,15 +111,19 @@ components:
             - off
     Energy:
       required:
-        - watt
-        - dailyConsumption
+        - current_mw
+        - today_wh
+        - total_wh
       properties:
-        watt:
+        current_mw:
           type: integer
-          description: Watt (or power) in milli watt
-        dailyConsumption:
+          description: Actual consumption in milli watt
+        today_wh:
           type: integer
-          description: Current consumption (of the day) in watt per hours
+          description: Consumption of the day in watt per hours
+        total_wh:
+          type: integer
+          description: Consumption since switch on device in watt per hours
     ProtocolError:
       required:
         - code
