@@ -4,6 +4,7 @@
 ![Go build](https://github.com/larmic/tp-link-hs110-api/workflows/Go%20build/badge.svg)
 ![Docker build and push](https://github.com/larmic/tp-link-hs110-api/workflows/Docker%20build%20and%20push/badge.svg)
 [![Docker hub image](https://img.shields.io/docker/image-size/larmic/tp-link-hs110-api?label=dockerhub)](https://hub.docker.com/repository/docker/larmic/tp-link-hs110-api)
+![Docker Image Version (latest by date)](https://img.shields.io/docker/v/larmic/tp-link-hs110-api)
 
 A REST api client (adapter) for the proprietary TP-Link Smart Home protocol to control TP-Link HS110 WiFi Smart Plugs. 
 The SmartHome protocol runs on TCP port 9999 and uses a trivial XOR autokey encryption that provides no security.
@@ -12,6 +13,14 @@ REST endpoints documented in [open api 3.1](open-api-3.yaml).
 
 This project inspired by [tplink-smartplug written in python](https://github.com/softScheck/tplink-smartplug) and 
 improves my Go knowledge.
+
+## Versioning
+
+[Semantic Versioning 2.x](https://semver.org/) is used. Version number **MAJOR.MINOR.PATCH** with
+
+* **MAJOR** version increase on incompatible API changes
+* **MINOR** version increase on adding new functionality in a backwards compatible manner
+* **PATCH** version increase on backwards compatible bug fixes or documentation
 
 ## Usage
 
