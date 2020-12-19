@@ -47,29 +47,33 @@ jobs:
         run: |
           echo ""
           echo build docker image $IMAGE_NAME:amd64
-          DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=amd64" --pull --tag $IMAGE_NAME:amd64 .
+          DOCKER_BUILDKIT=1 docker build --build-arg=CGO_ENABLED=0 --build-arg=GOARCH=amd64 --pull --tag $IMAGE_NAME:amd64 .
           docker push $IMAGE_NAME:amd64
 
           echo ""
           echo build docker image $IMAGE_NAME:arm32v6
-          DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=arm GOARM=6" --pull --tag $IMAGE_NAME:arm32v6 .
+          DOCKER_BUILDKIT=1 docker build --build-arg=CGO_ENABLED=0 --build-arg=GOARCH=arm -- build-arg=GOARM=6 --pull --tag $IMAGE_NAME:arm32v6 .
           docker push $IMAGE_NAME:arm32v6
 
           echo ""
           echo build docker image $IMAGE_NAME:arm32v7
-          DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=arm GOARM=7" --pull --tag $IMAGE_NAME:arm32v7 .
+          DOCKER_BUILDKIT=1 docker build --build-arg=CGO_ENABLED=0 --build-arg=GOARCH=arm -- build-arg=GOARM=7 --pull --tag $IMAGE_NAME:arm32v7 .
           docker push $IMAGE_NAME:arm32v7
 
           echo ""
           echo build docker image $IMAGE_NAME:arm64v8
-          DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=arm64 GOARM=8" --pull --tag $IMAGE_NAME:arm64v8 .
+          DOCKER_BUILDKIT=1 docker build --build-arg=CGO_ENABLED=0 --build-arg=GOARCH=arm64 -- build-arg=GOARM=8 --pull --tag $IMAGE_NAME:arm64v8 .
           docker push $IMAGE_NAME:arm64v8
+
+          docker images
 
           export DOCKER_CLI_EXPERIMENTAL=enabled
 
           echo ""
           echo create manifest
-          docker manifest create $LATEST_IMAGE --amend $IMAGE_NAME:amd64 --amend $IMAGE_NAME:arm32v6 --amend $IMAGE_NAME:arm32v7 --amend $IMAGE_NAME:arm64v8
-          docker manifest create $TIMESTAMP_IMAGE --amend $IMAGE_NAME:amd64 --amend $IMAGE_NAME:arm32v6 --amend $IMAGE_NAME:arm32v7 --amend $IMAGE_NAME:arm64v8
+          docker manifest create $LATEST_IMAGE $IMAGE_NAME:amd64 $IMAGE_NAME:arm32v6 $IMAGE_NAME:arm32v7 $IMAGE_NAME:arm64v8
+          docker manifest create $TIMESTAMP_IMAGE $IMAGE_NAME:amd64 $IMAGE_NAME:arm32v6 $IMAGE_NAME:arm32v7 $IMAGE_NAME:arm64v8
+          docker manifest annotate $LATEST_IMAGE $IMAGE_NAME:amd64 $IMAGE_NAME:arm32v6 $IMAGE_NAME:arm32v7 $IMAGE_NAME:arm64v8
+          docker manifest annotate $TIMESTAMP_IMAGE $IMAGE_NAME:amd64 $IMAGE_NAME:arm32v6 $IMAGE_NAME:arm32v7 $IMAGE_NAME:arm64v8
           docker manifest push $LATEST_IMAGE
           docker manifest push $TIMESTAMP_IMAGE
