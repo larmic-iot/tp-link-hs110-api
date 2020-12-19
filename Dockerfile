@@ -22,7 +22,7 @@ RUN go test -v ./...
 # -o app          -> force to build an executable app file (instead of default https://golang.org/cmd/go/#hdr-Compile_packages_and_dependencies)
 ARG CGO_ENABLED=0
 ARG GOARCH=amd64
-ARG GOARM=6
+ARG GOARM=7
 RUN env CGO_ENABLED=${CGO_ENABLED} GOARCH=${GOARCH} GOARM=${GOARM} go build -a -o main .
 
 # Step 2: create minimal executable image (less than 10 MB)

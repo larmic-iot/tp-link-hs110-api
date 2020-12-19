@@ -45,7 +45,7 @@ jobs:
 
       - name: Build amd64 image
         run: |
-          DOCKER_BUILDKIT=1 docker build --build-arg=CGO_ENABLED=$CGO_ENABLED --build-arg=GOARCH=$GOARCH --pull --tag $IMAGE_NAME:amd64 .
+          DOCKER_BUILDKIT=1 docker build --build-arg=CGO_ENABLED=$CGO_ENABLED --build-arg=GOARCH=$GOARCH --tag $IMAGE_NAME:amd64 .
           docker push $IMAGE_NAME:amd64
         env:
           CGO_ENABLED: 0
@@ -53,7 +53,7 @@ jobs:
 
       - name: Build arm32v7 image
         run: |
-          DOCKER_BUILDKIT=1 docker build --build-arg=CGO_ENABLED=$CGO_ENABLED --build-arg=GOARCH=$GOARCH --build-arg=GOARM=$GOARM --pull --tag $IMAGE_NAME:arm32v7 .
+          DOCKER_BUILDKIT=1 docker build --build-arg=CGO_ENABLED=$CGO_ENABLED --build-arg=GOARCH=$GOARCH --build-arg=GOARM=$GOARM --tag $IMAGE_NAME:arm32v7 .
           docker push $IMAGE_NAME:arm32v7
         env:
           CGO_ENABLED: 0
@@ -67,8 +67,8 @@ jobs:
         run: |
           docker manifest create $LATEST_IMAGE $IMAGE_NAME:amd64 $IMAGE_NAME:arm32v7
           docker manifest create $TIMESTAMP_IMAGE $IMAGE_NAME:amd64 $IMAGE_NAME:arm32v7
-          docker manifest annotate $LATEST_IMAGE $IMAGE_NAME:amd64 $IMAGE_NAME:arm32v7
-          docker manifest annotate $TIMESTAMP_IMAGE $IMAGE_NAME:amd64 $IMAGE_NAME:arm32v7
+          docker manifest annotate $LATEST_IMAGE $IMAGE_NAME:arm32v7 --os linux --arch arm
+          docker manifest annotate $TIMESTAMP_IMAGE $IMAGE_NAME:arm32v7 --os linux --arch arm
           docker manifest push $LATEST_IMAGE
           docker manifest push $TIMESTAMP_IMAGE
         env:
