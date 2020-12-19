@@ -45,19 +45,17 @@ jobs:
 
       - name: Build amd64 image
         run: |
-          DOCKER_BUILDKIT=1 docker build --build-arg=CGO_ENABLED=$CGO_ENABLED --build-arg=GOARCH=$GOARCH --pull --tag $IMAGE_TAG .
-          docker push $IMAGE_TAG
+          DOCKER_BUILDKIT=1 docker build --build-arg=CGO_ENABLED=$CGO_ENABLED --build-arg=GOARCH=$GOARCH --pull --tag $IMAGE_NAME:amd64 .
+          docker push $IMAGE_NAME:amd64
         env:
-          IMAGE_TAG: $IMAGE_NAME:amd64
           CGO_ENABLED: 0
           GOARCH: amd64
 
       - name: Build arm32v7 image
         run: |
-          DOCKER_BUILDKIT=1 docker build --build-arg=CGO_ENABLED=$CGO_ENABLED --build-arg=GOARCH=$GOARCH --build-arg=GOARM=$GOARM --pull --tag $IMAGE_TAG .
-          docker push $IMAGE_TAG
+          DOCKER_BUILDKIT=1 docker build --build-arg=CGO_ENABLED=$CGO_ENABLED --build-arg=GOARCH=$GOARCH --build-arg=GOARM=$GOARM --pull --tag $IMAGE_NAME:arm32v7 .
+          docker push $IMAGE_NAME:arm32v7
         env:
-          IMAGE_TAG: $IMAGE_NAME:amd64
           CGO_ENABLED: 0
           GOARCH: amd64
           GOARM: 7
