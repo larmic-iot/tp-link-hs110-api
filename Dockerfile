@@ -20,8 +20,6 @@ RUN go test -v ./...
 # GOARCH=amd64    -> because, hmm, everthing works fine with 64 bit :)
 # -a              -> force rebuilding of packages that are already up-to-date.
 # -o app          -> force to build an executable app file (instead of default https://golang.org/cmd/go/#hdr-Compile_packages_and_dependencies)
-RUN echo ${opts}
-RUN echo $opts
 RUN env ${opts} go build -a -o main .
 
 # Step 2: create minimal executable image (less than 10 MB)
