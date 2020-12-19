@@ -70,6 +70,12 @@ jobs:
           echo ""
           echo create manifest
           docker manifest create $LATEST_IMAGE $IMAGE_NAME:amd64 $IMAGE_NAME:arm32v6 $IMAGE_NAME:arm32v7 $IMAGE_NAME:arm64v8
+          docker manifest annotate $LATEST_IMAGE $LATEST_IMAGE:arm32v6 --os linux --arch arm
+          docker manifest annotate $LATEST_IMAGE $LATEST_IMAGE:arm32v7 --os linux --arch arm
+          docker manifest annotate $LATEST_IMAGE $LATEST_IMAGE:arm64v8 --os linux --arch arm
           docker manifest create $TIMESTAMP_IMAGE $IMAGE_NAME:amd64 $IMAGE_NAME:arm32v6 $IMAGE_NAME:arm32v7 $IMAGE_NAME:arm64v8
+          docker manifest annotate $TIMESTAMP_IMAGE $LATEST_IMAGE:arm32v6 --os linux --arch arm
+          docker manifest annotate $TIMESTAMP_IMAGE $LATEST_IMAGE:arm32v7 --os linux --arch arm
+          docker manifest annotate $TIMESTAMP_IMAGE $LATEST_IMAGE:arm64v8 --os linux --arch arm
           docker manifest push $LATEST_IMAGE
           docker manifest push $TIMESTAMP_IMAGE
