@@ -37,21 +37,32 @@ jobs:
       - name: Go Build
         run: CGO_ENABLED=0 GOOS=linux go build -v ./...
 
-      - name: Build the Docker image
-        run: |
-          echo DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag $LATEST_IMAGE --tag $TIMESTAMP_IMAGE
-          DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag $LATEST_IMAGE --tag $TIMESTAMP_IMAGE
-
-      - name: List Docker images
-        run: docker images
-
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Push to DockerHub
+      - name: Build the Docker image
         run: |
-          docker push $LATEST_IMAGE
-          docker push $TIMESTAMP_IMAGE
+          echo build docker image $IMAGE_NAME:amd64
+          DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=amd64" --tag $IMAGE_NAME:amd64 .
+          docker push $IMAGE:amd64
+
+          echo build docker image $IMAGE_NAME:arm/v6
+          DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=arm GOARM=6" --tag $IMAGE_NAME:arm/v6 .
+          docker push $IMAGE:arm/v6
+
+          echo build docker image $IMAGE_NAME:arm/v7
+          DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=arm GOARM=7" --tag $IMAGE_NAME:arm/v7 .
+          docker push $IMAGE:arm/v7
+
+          echo build docker image $IMAGE_NAME:arm64/v8
+          DOCKER_BUILDKIT=1 docker build --build-arg opts="CGO_ENABLED=0 GOARCH=arm64 GOARM=8" --tag $IMAGE_NAME:arm64/v8 .
+          docker push $IMAGE:arm64/v8
+
+          echo create manifest
+          docker manifest create $LATEST_IMAGE $IMAGE:amd64 $IMAGE:arm/v6 $IMAGE:arm/v7 $IMAGE:arm64/v8
+          docker manifest create $TIMESTAMP_IMAGE $IMAGE:amd64 $IMAGE:arm/v6 $IMAGE:arm/v7 $IMAGE:arm64/v8
+          docker manifest push $LATEST_IMAGE
+          docker manifest push $TIMESTAMP_IMAGE
