@@ -5,7 +5,7 @@ IMAGE_TAG=latest
 run:
 	go run main.go
 
-docker-all: docker-build docker-push
+docker-all: docker-build
 
 docker-build:
 	@echo "Remove docker image if already exists"
@@ -20,3 +20,7 @@ docker-run:
 
 docker-stop:
 	docker stop ${CONTAINER_NAME}
+
+docker-remove-dangling:
+	@echo "Remove dangling images"
+	docker rmi -f $$(docker images --filter "dangling=true" -q --no-trunc)
