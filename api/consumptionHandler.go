@@ -12,7 +12,7 @@ import (
 	"tp-link-hs110-api/api/model"
 )
 
-func EnergyHandler(w http.ResponseWriter, r *http.Request) {
+func ConsumptionHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	ip := vars["ip"]
 	year, month, day := time.Now().Date()
@@ -43,8 +43,8 @@ func EnergyHandler(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewEncoder(w).Encode(energy)
 }
 
-func mapEnergyModel(eMeterInfo clientModel.EMeterInfo, dailyEMeterInfo clientModel.DayStatEMeterInfo) model.Energy {
-	return model.Energy{
+func mapEnergyModel(eMeterInfo clientModel.EMeterInfo, dailyEMeterInfo clientModel.DayStatEMeterInfo) model.Consumption {
+	return model.Consumption{
 		CurrentMW: eMeterInfo.Power,
 		TodayWH:   dailyEMeterInfo.EnergyWattHours,
 		TotalWH:   eMeterInfo.TotalWattHours,

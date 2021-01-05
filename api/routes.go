@@ -33,9 +33,9 @@ var routes = Routes{
 		HandlerFunc: GetSystemHandler,
 	},
 	Route{
-		Name:        "Energy",
+		Name:        "Consumption",
 		Method:      "GET",
 		Pattern:     "/api/{ip}/consumption",
-		HandlerFunc: EnergyHandler,
+		HandlerFunc: ConsumptionHandler,
 	},
 }

@@ -36,7 +36,7 @@ paths:
                 $ref: "#/components/schemas/ProtocolError"
   /api/{plugIp}/consumption:
     get:
-      summary: Returns a smart plug energy info by ip.
+      summary: Returns a smart plug consumption info by ip.
       parameters:
         - name: plugIp
           in: path
@@ -46,11 +46,11 @@ paths:
             type: string
       responses:
         '200':
-          description: Smart plug energy info
+          description: Smart plug consumption info
           content:
             'application/json':
               schema:
-                $ref: "#/components/schemas/Energy"
+                $ref: "#/components/schemas/Consumption"
         '404':
           description: Smart plug not found.
           content:
@@ -109,7 +109,7 @@ components:
           enum:
             - on
             - off
-    Energy:
+    Consumption:
       required:
         - current_mw
         - today_wh
