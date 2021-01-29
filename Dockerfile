@@ -21,9 +21,6 @@ RUN go test -v ./...
 # -a              -> force rebuilding of packages that are already up-to-date.
 # -o main         -> force to build an executable app file (instead of default https://golang.org/cmd/go/#hdr-Compile_packages_and_dependencies)
 
-ARG BUILDPLATFORM
-ARG TARGETPLATFORM
-ARG VERSION
 RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
 RUN echo "Version $VERSION"
 
