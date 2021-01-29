@@ -43,6 +43,8 @@ jobs:
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
+        with:
+          plattforms: arm64,arm
 
       - name: Available platforms
         run: echo ${{ steps.qemu.outputs.platforms }}
