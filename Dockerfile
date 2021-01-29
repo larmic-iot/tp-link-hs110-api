@@ -10,6 +10,8 @@ WORKDIR /go/src/larmic/
 
 COPY main.go go.mod go.sum /go/src/larmic/
 COPY api /go/src/larmic/api
+COPY open-api-3.yaml /go/src/larmic
+
 
 RUN go mod download
 
@@ -21,8 +23,14 @@ RUN go test -v ./...
 # -a              -> force rebuilding of packages that are already up-to-date.
 # -o main         -> force to build an executable app file (instead of default https://golang.org/cmd/go/#hdr-Compile_packages_and_dependencies)
 
-RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
-RUN echo "Version $VERSION"
+ARG BUILDPLATFORM
+ARG TARGETPLATFORM
+ARG VERSION
+
+RUN echo "I am running on $BUILDPLATFORM, building $VERSION for $TARGETPLATFORM"
+
+# set version in open-api-3.yaml
+RUN sed -e "s/\${VERSION}/$VERSION/" open-api-3.yaml
 
 RUN if [ "$TARGETPLATFORM" = "linux/arm/v7" ] ; then \
         echo "I am building linux/arm/v7 with CGO_ENABLED=0 GOARCH=arm GOARM=7" ; \
@@ -46,7 +54,7 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ] ; then \
 FROM scratch
 WORKDIR /root/
 COPY --from=builder /go/src/larmic/main .
-COPY open-api-3.yaml .
+COPY --from=builder /go/src/larmic/open-api-3.yaml .
 
 EXPOSE 8080
 ENTRYPOINT ["./main"]
