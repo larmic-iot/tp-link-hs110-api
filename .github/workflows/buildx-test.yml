@@ -45,7 +45,7 @@ jobs:
         uses: docker/setup-qemu-action@v1
         with:
           platforms: arm64,arm
-        run:
+        run: |
           # Use docker-container driver to allow useful features (push/multi-platform)
-          - docker buildx create --driver docker-container --use
-          - docker buildx inspect --bootstrap
+          docker buildx create --driver docker-container --use
+          docker buildx inspect --bootstrap
