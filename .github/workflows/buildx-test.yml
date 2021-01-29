@@ -51,3 +51,12 @@ jobs:
           # Use docker-container driver to allow useful features (push/multi-platform)
           docker buildx create --driver docker-container --use
           docker buildx inspect --bootstrap
+
+      - name: build image
+        run: |
+          update-binfmts --enable # Important: Ensures execution of other binary formats is enabled in the kernel
+          docker buildx build --pull -t "$IMAGE_NAME" .
+
+      - name: docker images
+        run: |
+          docker images
