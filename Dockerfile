@@ -20,22 +20,23 @@ RUN go test -v ./...
 # GOARCH=amd64    -> because, hmm, everthing works fine with 64 bit :)
 # -a              -> force rebuilding of packages that are already up-to-date.
 # -o app          -> force to build an executable app file (instead of default https://golang.org/cmd/go/#hdr-Compile_packages_and_dependencies)
-ARG CGO_ENABLED=0
-ARG GOARM=7
-ARG GOARCH=amd64
 
 ARG BUILDPLATFORM
 ARG TARGETPLATFORM
 RUN echo "Hello, my CPU architecture is $(uname -m)"
 RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
 
-RUN if [ "$TARGETPLATFORM" = "linux/arm/v7" ] ; then GOARCH=arm ; else echo "" ; fi
-RUN if [ "$TARGETPLATFORM" = "linux/arm64" ] ; then GOARCH=arm64 ; else echo "" ; fi
-RUN if [ "$TARGETPLATFORM" = "linux/amd64" ] ; then GOARCH=amd64 ; else echo "" ; fi
+RUN if [ "$TARGETPLATFORM" = "linux/arm/v7" ] ; then \
+        env CGO_ENABLED=0 GOARCH=arm GOARM=7 go build -a -o main . ; \
+    fi
 
-RUN echo "Building GOARCH $GOARCH"
+RUN if [ "$TARGETPLATFORM" = "linux/arm64" ] ; then \
+        env CGO_ENABLED=0 GOARCH=arm64 GOARM=7 go build -a -o main . ; \
+    fi
 
-RUN env CGO_ENABLED=${CGO_ENABLED} GOARCH=${GOARCH} GOARM=${GOARM} go build -a -o main .
+RUN if [ "$TARGETPLATFORM" = "linux/amd64" ] ; then \
+        env CGO_ENABLED=0 GOARCH=amd64 go build -a -o main . ; \
+    fi
 
 # Step 2: create minimal executable image (less than 10 MB)
 FROM scratch
