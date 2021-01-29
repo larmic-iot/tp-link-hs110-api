@@ -27,8 +27,6 @@ ARG TARGETPLATFORM
 ARG BUILDPLATFORM
 RUN echo "Hello, my CPU architecture is $(uname -m)"
 RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
-RUN echo "OPTS=$OPTS"
-RUN echo "PLATFORM=$PLATFORM"
 RUN env CGO_ENABLED=${CGO_ENABLED} GOARCH=${GOARCH} GOARM=${GOARM} go build -a -o main .
 
 # Step 2: create minimal executable image (less than 10 MB)

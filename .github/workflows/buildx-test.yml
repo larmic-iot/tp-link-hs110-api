@@ -29,10 +29,6 @@ jobs:
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
-        with:
-          platforms: arm64,arm
-
-      - name: prepare buildx
         run: |
           # Use docker-container driver to allow useful features (push/multi-platform)
           docker buildx create --driver docker-container --use
@@ -41,7 +37,7 @@ jobs:
       - name: build image
         run: |
           update-binfmts --enable # Important: Ensures execution of other binary formats is enabled in the kernel
-          docker buildx build --platform=linux/amd64,linux/arm64,linux/arm --build-arg OPTS=TEST --pull -t "$IMAGE_NAME" .
+          docker buildx build --platform=linux/amd64,linux/arm64,linux/arm --pull -t "$IMAGE_NAME" .
 
       - name: docker images
         run: |
