@@ -28,9 +28,9 @@ ARG BUILDPLATFORM
 RUN echo "Hello, my CPU architecture is $(uname -m)"
 RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
 
-RUN if [ "$TARGETPLATFORM" = "linux/arm/v7" ] echo "arm v7";
-RUN if [ "$TARGETPLATFORM" = "linux/arm64" ] echo "arm 64";
-RUN if [ "$TARGETPLATFORM" = "linux/amd64" ] echo "amd 64;
+RUN if [ "$TARGETPLATFORM" = "linux/arm/v7" ] echo "arm v7"; fi
+RUN if [ "$TARGETPLATFORM" = "linux/arm64" ] echo "arm 64"; fi
+RUN if [ "$TARGETPLATFORM" = "linux/amd64" ] echo "amd 64"; fi
 
 RUN env CGO_ENABLED=${CGO_ENABLED} GOARCH=${GOARCH} GOARM=${GOARM} go build -a -o main .
 
