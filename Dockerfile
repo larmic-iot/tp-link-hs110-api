@@ -21,15 +21,17 @@ RUN go test -v ./...
 # -a              -> force rebuilding of packages that are already up-to-date.
 # -o app          -> force to build an executable app file (instead of default https://golang.org/cmd/go/#hdr-Compile_packages_and_dependencies)
 ARG CGO_ENABLED=0
-ARG TARGETPLATFORM=linux/amd64
-ARG BUILDPLATFORM
 ARG GOARM=7
+ARG GOARCH=amd64
+
+ARG BUILDPLATFORM
+ARG TARGETPLATFORM=linux/amd64
 RUN echo "Hello, my CPU architecture is $(uname -m)"
 RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
 
-RUN if [ "$TARGETPLATFORM" = "linux/arm/v7" ] ; then ARG GOARCH=arm ; else echo "" ; fi
-RUN if [ "$TARGETPLATFORM" = "linux/arm64" ] ; then ARG GOARCH=arm64 ; else echo "" ; fi
-RUN if [ "$TARGETPLATFORM" = "linux/amd64" ] ; then ARG GOARCH=amd64 ; else echo "" ; fi
+RUN if [ "$TARGETPLATFORM" = "linux/arm/v7" ] ; then GOARCH=arm ; else echo "" ; fi
+RUN if [ "$TARGETPLATFORM" = "linux/arm64" ] ; then GOARCH=arm64 ; else echo "" ; fi
+RUN if [ "$TARGETPLATFORM" = "linux/amd64" ] ; then GOARCH=amd64 ; else echo "" ; fi
 
 RUN echo "Building GOARCH $GOARCH"
 
