@@ -23,12 +23,15 @@ RUN go test -v ./...
 ARG CGO_ENABLED=0
 ARG TARGETPLATFORM=linux/amd64
 ARG BUILDPLATFORM
+ARG GOARM=7
 RUN echo "Hello, my CPU architecture is $(uname -m)"
 RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
 
-RUN if [ "$TARGETPLATFORM" = "linux/arm/v7" ] ; then echo "arm v7" ; ARG GOARCH=arm ; ARG GOARM=7 ; else echo "" ; fi
-RUN if [ "$TARGETPLATFORM" = "linux/arm64" ] ; then echo "arm 64" ; ARG GOARCH=arm64 ; ARG GOARM=7 ; else echo "" ; fi
-RUN if [ "$TARGETPLATFORM" = "linux/amd64" ] ; then echo "amd 64" ; ARG GOARCH=amd64 ; ARG GOARM=7 ; else echo "" ; fi
+RUN if [ "$TARGETPLATFORM" = "linux/arm/v7" ] ; then ARG GOARCH=arm ; else echo "" ; fi
+RUN if [ "$TARGETPLATFORM" = "linux/arm64" ] ; then ARG GOARCH=arm64 ; else echo "" ; fi
+RUN if [ "$TARGETPLATFORM" = "linux/amd64" ] ; then ARG GOARCH=amd64 ; else echo "" ; fi
+
+RUN echo "Building GOARCH $GOARCH"
 
 RUN env CGO_ENABLED=${CGO_ENABLED} GOARCH=${GOARCH} GOARM=${GOARM} go build -a -o main .
 
