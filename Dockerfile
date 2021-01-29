@@ -23,6 +23,10 @@ RUN go test -v ./...
 ARG CGO_ENABLED=0
 ARG GOARCH=amd64
 ARG GOARM=7
+ARG opts
+ARG platform
+RUN echo opts ${opts}
+RUN echo platform ${platform}
 RUN env CGO_ENABLED=${CGO_ENABLED} GOARCH=${GOARCH} GOARM=${GOARM} go build -a -o main .
 
 # Step 2: create minimal executable image (less than 10 MB)
