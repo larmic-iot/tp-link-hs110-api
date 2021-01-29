@@ -28,7 +28,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Set up QEMU
-          uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v1
 
       - name: prepare buildx
         run: |
