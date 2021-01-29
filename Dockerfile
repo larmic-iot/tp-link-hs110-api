@@ -30,7 +30,7 @@ ARG VERSION
 RUN echo "I am running on $BUILDPLATFORM, building $VERSION for $TARGETPLATFORM"
 
 # set version in open-api-3.yaml
-RUN sed -I "s/\${VERSION}/$VERSION/" open-api-3.yaml
+RUN sed "s/\${VERSION}/$VERSION/" open-api-3.yaml
 
 RUN if [ "$TARGETPLATFORM" = "linux/arm/v7" ] ; then \
         echo "I am building linux/arm/v7 with CGO_ENABLED=0 GOARCH=arm GOARM=7" ; \
