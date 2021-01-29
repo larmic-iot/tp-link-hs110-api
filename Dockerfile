@@ -23,7 +23,9 @@ RUN go test -v ./...
 
 ARG BUILDPLATFORM
 ARG TARGETPLATFORM
+ARG VERSION
 RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
+RUN echo "Version $VERSION"
 
 RUN if [ "$TARGETPLATFORM" = "linux/arm/v7" ] ; then \
         echo "I am building linux/arm/v7 with CGO_ENABLED=0 GOARCH=arm GOARM=7" ; \
