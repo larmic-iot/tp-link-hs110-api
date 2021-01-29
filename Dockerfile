@@ -25,7 +25,7 @@ ARG GOARM=7
 ARG GOARCH=amd64
 
 ARG BUILDPLATFORM
-ARG TARGETPLATFORM=linux/amd64
+ARG TARGETPLATFORM
 RUN echo "Hello, my CPU architecture is $(uname -m)"
 RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
 
