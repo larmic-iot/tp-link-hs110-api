@@ -12,7 +12,6 @@ COPY main.go go.mod go.sum /go/src/larmic/
 COPY api /go/src/larmic/api
 COPY open-api-3.yaml /go/src/larmic
 
-
 RUN go mod download
 
 RUN go test -v ./...
