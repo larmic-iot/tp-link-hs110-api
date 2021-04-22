@@ -12,7 +12,7 @@ import (
 	"tp-link-hs110-api/api/model"
 )
 
-func ConsumptionHandler(w http.ResponseWriter, r *http.Request) {
+func CurrentConsumptionHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	ip := vars["ip"]
 	year, month, day := time.Now().Date()

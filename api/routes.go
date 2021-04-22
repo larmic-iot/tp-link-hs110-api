@@ -36,6 +36,6 @@ var routes = Routes{
 		Name:        "Consumption",
 		Method:      "GET",
 		Pattern:     "/api/{ip}/consumption",
-		HandlerFunc: ConsumptionHandler,
+		HandlerFunc: CurrentConsumptionHandler,
 	},
 }
