@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"time"
+	http2 "tp-link-hs110-api/api/client/http"
 
 	"github.com/gorilla/mux"
 
@@ -23,16 +24,7 @@ func CurrentConsumptionHandler(w http.ResponseWriter, r *http.Request) {
 	dailyEnergyResponse, err2 := socketClient.RequestDailyEnergyStatistics(year, month, day)
 
 	if err != nil || err2 != nil {
-		w.Header().Add("Content-Type", "text/plain; charset=UTF-8")
-		w.WriteHeader(http.StatusNotFound)
-
-		_ = json.
-			NewEncoder(w).
-			Encode(
-				model.ProtocolError{
-					Code:    http.StatusNotFound,
-					Message: ip + " not found!",
-				})
+		http2.NewErrorEncoder(w).Encode(http.StatusNotFound, ip+" not found!")
 		return
 	}
 

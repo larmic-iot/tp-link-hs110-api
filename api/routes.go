@@ -38,4 +38,22 @@ var routes = Routes{
 		Pattern:     "/api/{ip}/consumption",
 		HandlerFunc: CurrentConsumptionHandler,
 	},
+	Route{
+		Name:        "Consumption",
+		Method:      "GET",
+		Pattern:     "/api/{ip}/consumption/{year}",
+		HandlerFunc: ConsumptionHandler,
+	},
+	Route{
+		Name:        "Consumption",
+		Method:      "GET",
+		Pattern:     "/api/{ip}/consumption/{year}/{month}",
+		HandlerFunc: ConsumptionHandler,
+	},
+	Route{
+		Name:        "Consumption",
+		Method:      "GET",
+		Pattern:     "/api/{ip}/consumption/{year}/{month}/{day}",
+		HandlerFunc: ConsumptionHandler,
+	},
 }

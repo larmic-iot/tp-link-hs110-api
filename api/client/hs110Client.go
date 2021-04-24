@@ -24,6 +24,7 @@ const (
 	// see https://github.com/softScheck/tplink-smartplug/blob/master/tplink-smarthome-commands.txt
 	emeter        = "{\"emeter\":{\"get_realtime\":{}}}"
 	dailyEMeter   = "{\"emeter\":{\"get_daystat\":{\"month\":%d,\"year\":%d}}}"
+	monthlyEMeter = "{\"emeter\":{\"get_monthstat\":{\"year\":%d}}}"
 	info          = "{\"system\":{\"get_sysinfo\":{}}}"
 	on            = "{\"system\":{\"set_relay_state\":{\"state\":1}}}}"
 	off           = "{\"system\":{\"set_relay_state\":{\"state\":0}}}}"
@@ -95,6 +96,29 @@ func (d *TpLinkHS110Client) RequestDailyEnergyStatistics(year int, month time.Mo
 	}
 
 	return model.DayStatEMeterInfo{}, nil
+}
+
+func (d *TpLinkHS110Client) RequestMonthlyEnergyStatistics(year int, month int) (model.MonthStatEMeterInfo, error) {
+	response, err := d.request(fmt.Sprintf(monthlyEMeter, year))
+
+	if err != nil {
+		return model.MonthStatEMeterInfo{}, err
+	}
+
+	var wrapper model.MonthStatEMeterWrapper
+	err = json.Unmarshal([]byte(response), &wrapper)
+
+	if err != nil {
+		return model.MonthStatEMeterInfo{}, err
+	}
+
+	for _, value := range wrapper.MonthStatEMeter.MonthStatEMeterInfos.MonthStatEMeterInfo {
+		if value.Month == month {
+			return value, nil
+		}
+	}
+
+	return model.MonthStatEMeterInfo{}, nil
 }
 
 func (d *TpLinkHS110Client) RequestSwitchOn() (string, error) {
