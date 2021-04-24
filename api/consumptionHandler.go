@@ -28,7 +28,7 @@ func ConsumptionHandler(w http.ResponseWriter, r *http.Request) {
 
 	// TODO implement me
 	log.Printf("ip: %s", ip)
-	log.Printf("year: %s", year)
+	log.Printf("year: %d", year)
 	log.Printf("month: %s", month)
 	log.Printf("day: %s", day)
 

@@ -19,7 +19,7 @@ func TestHandle404(t *testing.T) {
 		t.Error("Did not get expected HTTP status code, got", response.Code)
 	}
 
-	if response.Header().Get("Content-Type") != "text/plain; charset=UTF-8" {
+	if response.Header().Get("Content-Type") != "application/json; charset=UTF-8" {
 		t.Error("Did not get expected HTTP content type, got", response.Header().Get("Content-Type"))
 	}
 
