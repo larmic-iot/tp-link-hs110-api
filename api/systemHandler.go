@@ -3,7 +3,7 @@ package api
 import (
 	"encoding/json"
 	"net/http"
-	http2 "tp-link-hs110-api/api/client/http"
+	http3 "tp-link-hs110-api/api/http"
 
 	"github.com/gorilla/mux"
 
@@ -21,7 +21,7 @@ func GetSystemHandler(w http.ResponseWriter, r *http.Request) {
 	response, err := socketClient.RequestInfo()
 
 	if err != nil {
-		http2.NewErrorEncoder(w).Encode(http.StatusNotFound, ip+" not found!")
+		http3.NewErrorEncoder(w).Encode(http.StatusNotFound, ip+" not found!")
 		return
 	}
 

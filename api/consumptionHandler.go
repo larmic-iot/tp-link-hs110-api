@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strconv"
 	"tp-link-hs110-api/api/client"
-	http2 "tp-link-hs110-api/api/client/http"
-	"tp-link-hs110-api/api/client/parse"
+	http3 "tp-link-hs110-api/api/http"
+	parser2 "tp-link-hs110-api/api/parser"
 )
 
 func ConsumptionHandler(w http.ResponseWriter, r *http.Request) {
@@ -15,10 +15,10 @@ func ConsumptionHandler(w http.ResponseWriter, r *http.Request) {
 
 	ipParameter := vars["ip"]
 
-	ip, err := parse.ParseIp(ipParameter)
+	ip, err := parser2.ParseIp(ipParameter)
 
 	if err != nil {
-		http2.NewErrorEncoder(w).Encode(http.StatusBadRequest, ipParameter+" not valid")
+		http3.NewErrorEncoder(w).Encode(http.StatusBadRequest, ipParameter+" not valid")
 		return
 	}
 
