@@ -4,7 +4,9 @@ on:
   push:
     branches:
       - 'development'
-      - 'feature/**'
+  pull_request:
+    branches:
+      - '**'
 
 env:
   IMAGE_NAME: larmic/tp-link-hs110-api
