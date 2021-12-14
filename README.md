@@ -44,7 +44,7 @@ $ curl http://localhost:8080/10.0.0.1/consumption   # Energy consumption
 ### Requirements
 
 * Docker 
-* Go 1.15.x (if you want to build it without using docker builder)
+* Go 1.17.x (if you want to build it without using docker builder)
 
 ### Build it
 
