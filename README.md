@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ![Go build](https://github.com/larmic/tp-link-hs110-api/workflows/Go%20build/badge.svg)
-![Docker build and push](https://github.com/larmic/tp-link-hs110-api/workflows/Docker%20build%20and%20push/badge.svg)
+![Docker build and push (Release)](https://github.com/larmic/tp-link-hs110-api/workflows/Docker%20build%20and%20push%20release/badge.svg)
 [![Docker hub image](https://img.shields.io/docker/image-size/larmic/tp-link-hs110-api?label=dockerhub)](https://hub.docker.com/repository/docker/larmic/tp-link-hs110-api)
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/larmic/tp-link-hs110-api)
 
@@ -44,15 +44,14 @@ $ curl http://localhost:8080/10.0.0.1/consumption   # Energy consumption
 ### Requirements
 
 * Docker 
-* Go 1.15.x (if you want to build it without using docker builder)
+* Go 1.17.x (if you want to build it without using docker builder)
 
 ### Build it
 
 ```sh 
 $ make docker-build                             # build local docker image
-$ make docker-push                              # push local docker image to hub.docker.com
-$ make docker-all                               # build and push docker image to hub.docker.com
-$ make IMAGE_TAG="0.0.1" docker-all             # build and push docker image with specific version
+$ make docker-all                               # build docker container
+$ make IMAGE_TAG="0.0.1" docker-all             # build docker container with specific version
 ```
 
 ### Run it native
