@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	log.Println("Hello tp-link-hs110-api!")
+	log.Println("Hello tp-link-hs110-api! TEST")
 
 	router := api.NewRouter()
 
