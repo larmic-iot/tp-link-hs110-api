@@ -3,10 +3,6 @@ name: Docker build and push
 on:
   push:
     branches:
-      - 'development'
-      - 'feature/**'
-  pull_request:
-    branches:
       - 'feature/**'
 
 env:
