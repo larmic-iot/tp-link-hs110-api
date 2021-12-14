@@ -13,7 +13,7 @@ func Handle404() http.Handler {
 		w.Header().Add("Content-Type", "text/plain; charset=UTF-8")
 		w.WriteHeader(http.StatusNotFound)
 
-		log.Printf("%s\t%s\t(in progress)", r.Method, r.RequestURI)
+		log.Printf("%s\t%s\t(404 - not found)", r.Method, r.RequestURI)
 
 		_ = json.
 			NewEncoder(w).
