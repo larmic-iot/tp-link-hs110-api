@@ -35,7 +35,7 @@ var routes = Routes{
 	Route{
 		Name:        "Consumption",
 		Method:      "GET",
-		Pattern:     "/api/{ip}/consumption",
+		Pattern:     "/tp-link-api/api/{ip}/consumption",
 		HandlerFunc: ConsumptionHandler,
 	},
 }
