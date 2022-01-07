@@ -11,7 +11,7 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0
 
 paths:
-  /api/{plugIp}:
+  /tp-link-api/api/{plugIp}:
     get:
       summary: Returns a smart plug general info by ip.
       parameters:
@@ -34,7 +34,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ProtocolError"
-  /api/{plugIp}/consumption:
+  /tp-link-api/api/{plugIp}/consumption:
     get:
       summary: Returns a smart plug consumption info by ip.
       parameters:
