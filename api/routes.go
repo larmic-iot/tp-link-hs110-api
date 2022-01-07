@@ -17,19 +17,19 @@ var routes = Routes{
 	Route{
 		Name:        "Open Api documentation (yaml)",
 		Method:      "GET",
-		Pattern:     "/",
+		Pattern:     "/tp-link-api",
 		HandlerFunc: OpenApiDocumentation,
 	},
 	Route{
 		Name:        "Open Api documentation (yaml)",
 		Method:      "GET",
-		Pattern:     "/api",
+		Pattern:     "/tp-link-api/api",
 		HandlerFunc: OpenApiDocumentation,
 	},
 	Route{
 		Name:        "System",
 		Method:      "GET",
-		Pattern:     "/api/{ip}",
+		Pattern:     "/tp-link-api/api/{ip}",
 		HandlerFunc: GetSystemHandler,
 	},
 	Route{

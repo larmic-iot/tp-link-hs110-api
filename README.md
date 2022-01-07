@@ -34,9 +34,9 @@ $ docker run -d -p 8080:8080 --rm --name larmic-tp-link-hs110-api larmic/tp-link
 ## Example requests
 
 ```sh 
-$ curl http://localhost:8080                        # Open Api 3.1 specification
-$ curl http://localhost:8080/10.0.0.1               # General energy plug information
-$ curl http://localhost:8080/10.0.0.1/consumption   # Energy consumption
+$ curl http://localhost:8080/tp-link-api                        # Open Api 3.1 specification
+$ curl http://localhost:8080/tp-link-api/10.0.0.1               # General energy plug information
+$ curl http://localhost:8080/tp-link-api/10.0.0.1/consumption   # Energy consumption
 ```
 
 ## Build application by yourself
